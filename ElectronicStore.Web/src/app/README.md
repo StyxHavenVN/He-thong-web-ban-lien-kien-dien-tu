@@ -1,0 +1,1 @@
+# Thiết lập toàn cục (Global configurations)

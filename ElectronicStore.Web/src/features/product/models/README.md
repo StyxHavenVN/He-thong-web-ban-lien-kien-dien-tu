@@ -1,0 +1,1 @@
+# Kiểu dữ liệu/Interface (Ví dụ: IProduct.ts)

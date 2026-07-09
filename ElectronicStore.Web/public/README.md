@@ -1,0 +1,1 @@
+# File tĩnh (favicon, index.html, hình ảnh logo)
