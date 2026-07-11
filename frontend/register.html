@@ -15,31 +15,32 @@
             <p>Tham gia ngay để trải nghiệm mua sắm<br>và nhận nhiều ưu đãi hấp dẫn từ BlueTech!</p>
         </div>
 
-        <form action="#" method="POST" id="registerForm">
+        <div id="notice" class="notice"></div>
+        <form id="registerForm">
             <div class="input-group">
                 <i class='bx bx-user icon-left'></i>
-                <input type="text" class="form-control" placeholder="Họ và tên" required>
+                <input type="text" name="fullName" class="form-control" placeholder="Họ và tên" required >
             </div>
 
             <div class="input-group">
                 <i class='bx bx-envelope icon-left'></i>
-                <input type="email" class="form-control" placeholder="Email" required>
+                <input type="text" name="fullName" class="form-control" placeholder="Họ và tên" required >
             </div>
 
             <div class="input-group">
                 <i class='bx bx-phone icon-left'></i>
-                <input type="tel" class="form-control" placeholder="Số điện thoại" required>
+                <input type="tel" name="phone" class="form-control" placeholder="Số điện thoại" >
             </div>
 
             <div class="input-group">
                 <i class='bx bx-lock-alt icon-left'></i>
-                <input type="password" class="form-control" id="reg-password" placeholder="Mật khẩu" required>
+                <input type="password" name="password" class="form-control" id="reg-password" placeholder="Mật khẩu" required >
                 <i class='bx bx-hide icon-right toggle-password' data-target="reg-password"></i>
             </div>
 
             <div class="input-group">
                 <i class='bx bx-check-shield icon-left'></i>
-                <input type="password" class="form-control" id="reg-confirm-password" placeholder="Xác nhận mật khẩu" required>
+                <input type="password" name="confirmPassword" class="form-control" id="reg-confirm-password" placeholder="Xác nhận mật khẩu" required >
                 <i class='bx bx-show icon-right toggle-password' data-target="reg-confirm-password"></i>
             </div>
 
@@ -69,6 +70,7 @@
         </div>
     </div>
 
+    <script src="assets/js/api.js"></script>
     <script src="assets/js/auth.js"></script>
 </body>
 </html>

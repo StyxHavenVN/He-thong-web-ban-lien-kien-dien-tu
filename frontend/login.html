@@ -15,15 +15,16 @@
             <p>Chào mừng bạn quay trở lại!<br>Đăng nhập để tiếp tục mua sắm cùng BlueTech.</p>
         </div>
 
-        <form action="#" method="POST" id="loginForm">
+        <div id="notice" class="notice"></div>
+        <form id="loginForm">
             <div class="input-group">
                 <i class='bx bx-envelope icon-left'></i>
-                <input type="text" class="form-control" placeholder="Email hoặc số điện thoại" required>
+                <input type="email" name="email" class="form-control" placeholder="Email" autocomplete="email" required>
             </div>
 
             <div class="input-group">
                 <i class='bx bx-lock-alt icon-left'></i>
-                <input type="password" class="form-control" id="password" placeholder="Mật khẩu" required>
+                <input type="password" name="password" class="form-control" id="password" placeholder="Mật khẩu" autocomplete="current-password" required>
                 <i class='bx bx-hide icon-right toggle-password' data-target="password"></i>
             </div>
 
@@ -53,6 +54,7 @@
         </div>
     </div>
 
+    <script src="assets/js/api.js"></script>
     <script src="assets/js/auth.js"></script>
 </body>
 </html>
