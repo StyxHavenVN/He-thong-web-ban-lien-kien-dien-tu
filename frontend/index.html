@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Web bán linh kiện điện tử</title>
+  <link rel="stylesheet" href="assets/css/styles.css" />
+</head>
+<body>
+  <header class="header"><div class="logo">Linh Kiện Shop</div><nav id="nav" class="nav"></nav></header>
+  <main class="container">
+    <section class="hero">
+      <h1>Web bán linh kiện điện tử</h1>
+      <p>Frontend thuần HTML/CSS/JavaScript, Backend Node.js Express, có sản phẩm, giỏ hàng, đơn hàng, thanh toán, vận chuyển và gợi ý tương thích.</p>
+    </section>
+    <div id="notice" class="notice"></div>
+    <div class="toolbar">
+      <input id="search" placeholder="Tìm CPU, RAM, VGA..." />
+      <select id="category"><option value="">Tất cả danh mục</option></select>
+      <input id="minPrice" type="number" placeholder="Giá từ" />
+      <button onclick="loadProducts()">Tìm kiếm</button>
+    </div>
+    <section id="products" class="grid"></section>
+  </main>
+  <footer class="footer">Demo đồ án thiết kế kiến trúc phần mềm - C4 Model</footer>
+  <script src="assets/js/api.js"></script>
+  <script src="assets/js/products.js"></script>
+</body>
+</html>
