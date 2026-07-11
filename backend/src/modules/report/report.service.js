@@ -1,4 +1,4 @@
-const { readDb } = require('../repositories/jsonRepository');
+const { readDb } = require('../../repositories/jsonRepository');
 
 function revenueReport() {
   const db = readDb();
