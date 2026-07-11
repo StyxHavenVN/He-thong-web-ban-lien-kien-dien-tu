@@ -1,29 +1,377 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Web bán linh kiện điện tử</title>
-  <link rel="stylesheet" href="assets/css/styles.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danh sách sản phẩm - BlueTech</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
-<body>
-  <header class="header"><div class="logo">Linh Kiện Shop</div><nav id="nav" class="nav"></nav></header>
-  <main class="container">
-    <section class="hero">
-      <h1>Web bán linh kiện điện tử</h1>
-      <p>Frontend thuần HTML/CSS/JavaScript, Backend Node.js Express, có sản phẩm, giỏ hàng, đơn hàng, thanh toán, vận chuyển và gợi ý tương thích.</p>
-    </section>
-    <div id="notice" class="notice"></div>
-    <div class="toolbar">
-      <input id="search" placeholder="Tìm CPU, RAM, VGA..." />
-      <select id="category"><option value="">Tất cả danh mục</option></select>
-      <input id="minPrice" type="number" placeholder="Giá từ" />
-      <button onclick="loadProducts()">Tìm kiếm</button>
+<body class="product-page">
+
+    <div class="topbar">
+        <div class="container topbar-inner">
+            <div class="topbar-left">
+                <span><i class='bx bxs-truck'></i> Miễn phí giao hàng toàn quốc</span>
+                <span><i class='bx bx-refresh'></i> Hoàn trả trong 7 ngày</span>
+                <span><i class='bx bx-desktop'></i> Build PC dễ dàng - Trả góp 0%</span>
+            </div>
+            <div class="topbar-right">
+                <a href="#"><i class='bx bx-map'></i> Hệ thống showroom</a>
+                <a href="#"><i class='bx bx-receipt'></i> Kiểm tra đơn hàng</a>
+                <a href="#"><i class='bx bx-help-circle'></i> Hỗ trợ</a>
+            </div>
+        </div>
     </div>
-    <section id="products" class="grid"></section>
-  </main>
-  <footer class="footer">Demo đồ án thiết kế kiến trúc phần mềm - C4 Model</footer>
-  <script src="assets/js/api.js"></script>
-  <script src="assets/js/products.js"></script>
+
+    <header class="header-main">
+        <div class="container header-inner">
+            <a href="#" class="logo">
+                <i class='bx bxl-sketch'></i> BlueTech<span>PC STORE</span>
+            </a>
+            
+            <button class="btn-category">
+                <i class='bx bx-menu'></i> DANH MỤC
+            </button>
+
+            <div class="search-box">
+                <input type="text" placeholder="Bạn cần tìm gì?">
+                <select class="search-select">
+                    <option value="">Tất cả</option>
+                </select>
+                <button class="btn-search"><i class='bx bx-search'></i></button>
+            </div>
+
+            <div class="header-actions">
+                <div class="action-item">
+                    <i class='bx bx-phone-call'></i>
+                    <div>
+                        <span class="label">Hotline</span>
+                        <strong class="value text-primary">1900 1234</strong>
+                    </div>
+                </div>
+                <div class="action-item">
+                    <i class='bx bx-map-pin'></i>
+                    <div>
+                        <span class="label">Hệ thống</span>
+                        <strong class="value text-primary">Showroom</strong>
+                    </div>
+                </div>
+                <div class="action-item">
+                    <i class='bx bx-user'></i>
+                    <div>
+                        <a href="login.html" class="label link-hover">Đăng nhập</a>
+                        <a href="register.html" class="label link-hover">Đăng ký</a>
+                    </div>
+                </div>
+                <div class="action-item cart-action">
+                    <i class='bx bx-cart'></i>
+                    <span class="cart-count">2</span>
+                    <div>
+                        <span class="label">Giỏ</span>
+                        <strong class="value">hàng</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <nav class="navbar">
+        <div class="container nav-inner">
+            <a href="#" class="nav-item"><i class='bx bx-desktop'></i> BUILD PC</a>
+            <a href="#" class="nav-item"><i class='bx bxs-star'></i> KHUYẾN MÃI</a>
+            <a href="#" class="nav-item"><i class='bx bx-laptop'></i> LAPTOP</a>
+            <a href="#" class="nav-item"><i class='bx bx-microchip'></i> PC - LINH KIỆN</a>
+            <a href="#" class="nav-item"><i class='bx bx-mouse'></i> PHỤ KIỆN</a>
+            <a href="#" class="nav-item"><i class='bx bx-tv'></i> MÀN HÌNH</a>
+            <a href="#" class="nav-item"><i class='bx bx-headphone'></i> THIẾT BỊ NGOẠI VI</a>
+            <a href="#" class="nav-item"><i class='bx bx-news'></i> TIN TỨC</a>
+            <a href="#" class="nav-item"><i class='bx bx-support'></i> HỖ TRỢ</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="#">Trang chủ</a> > <a href="#">PC - Linh kiện</a> > <span>Card màn hình</span>
+        </div>
+
+        <div class="main-layout">
+            
+            <aside class="sidebar">
+                <div class="filter-box">
+                    <h3 class="filter-title">DANH MỤC <i class='bx bx-minus'></i></h3>
+                    <ul class="category-list">
+                        <li><a href="#"><i class='bx bx-chip'></i> CPU <span>(24)</span></a></li>
+                        <li><a href="#"><i class='bx bx-border-all'></i> Mainboard <span>(32)</span></a></li>
+                        <li class="active"><a href="#"><i class='bx bx-credit-card-front'></i> Card màn hình <span>(78)</span></a></li>
+                        <li><a href="#"><i class='bx bx-memory-card'></i> RAM <span>(56)</span></a></li>
+                        <li><a href="#"><i class='bx bx-hdd'></i> Ổ cứng - SSD <span>(43)</span></a></li>
+                        <li><a href="#"><i class='bx bx-plug'></i> Nguồn - PSU <span>(38)</span></a></li>
+                        <li><a href="#"><i class='bx bx-server'></i> Vỏ case <span>(67)</span></a></li>
+                        <li><a href="#"><i class='bx bx-wind'></i> Tản nhiệt <span>(29)</span></a></li>
+                    </ul>
+                </div>
+
+                <div class="filter-box">
+                    <div class="filter-header">
+                        <h3 class="filter-title">BỘ LỌC SẢN PHẨM</h3>
+                        <span class="clear-filter"><i class='bx bx-refresh'></i> Xóa bộ lọc</span>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4 class="group-title">HÃNG SẢN XUẤT <i class='bx bx-chevron-up'></i></h4>
+                        <label class="checkbox-label"><input type="checkbox" checked> NVIDIA <span>(56)</span></label>
+                        <label class="checkbox-label"><input type="checkbox"> AMD <span>(22)</span></label>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4 class="group-title">KHOẢNG GIÁ <i class='bx bx-chevron-up'></i></h4>
+                        <div class="range-slider">
+                            <div class="slider-track"></div>
+                            <input type="range" min="0" max="100" value="10">
+                            <input type="range" min="0" max="100" value="80">
+                        </div>
+                        <div class="price-inputs">
+                            <div>
+                                <span>Từ</span>
+                                <input type="text" value="2.000.000 ₫" class="form-control form-sm">
+                            </div>
+                            <div>
+                                <span>Đến</span>
+                                <input type="text" value="50.000.000 ₫" class="form-control form-sm">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="filter-group">
+                        <h4 class="group-title">BỘ NHỚ (VRAM) <i class='bx bx-chevron-up'></i></h4>
+                        <label class="checkbox-label"><input type="checkbox"> 4GB <span>(8)</span></label>
+                        <label class="checkbox-label"><input type="checkbox"> 6GB <span>(11)</span></label>
+                        <label class="checkbox-label"><input type="checkbox"> 8GB <span>(27)</span></label>
+                        <a href="#" class="link-more">Xem thêm</a>
+                    </div>
+                </div>
+            </aside>
+
+            <main class="content">
+                <div class="page-header">
+                    <h1>Card màn hình</h1>
+                </div>
+
+                <div class="toolbar">
+                    <div class="display-info">Hiển thị 1-24 / 78 sản phẩm</div>
+                    <div class="toolbar-actions">
+                        <div class="sort-box">
+                            <span>Sắp xếp:</span>
+                            <select class="form-control form-sm">
+                                <option>Mới nhất</option>
+                                <option>Giá tăng dần</option>
+                                <option>Giá giảm dần</option>
+                            </select>
+                        </div>
+                        <div class="view-modes">
+                            <button class="btn-view active"><i class='bx bxs-grid'></i></button>
+                            <button class="btn-view"><i class='bx bx-list-ul'></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-grid">
+                    <div class="product-card">
+                        <div class="badge badge-new">MỚI</div>
+                        <div class="product-img">
+                            <img src="https://placehold.co/200x150/f3f4f6/1f2937?text=VGA+ASUS" alt="VGA">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">ASUS TUF Gaming GeForce RTX 4060 Ti 8GB GDDR6</h3>
+                            <div class="product-rating">
+                                <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star-half'></i>
+                                <span>(32)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">11.990.000 ₫</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-icon-outline"><i class='bx bx-cart'></i></button>
+                                <button class="btn btn-primary btn-add-cart"><i class='bx bx-cart-add'></i> Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="badge badge-sale">-8%</div>
+                        <div class="product-img">
+                            <img src="https://placehold.co/200x150/f3f4f6/1f2937?text=VGA+MSI" alt="VGA">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">MSI GeForce RTX 4070 Ventus 3X 12GB GDDR6X</h3>
+                            <div class="product-rating">
+                                <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bx-star'></i>
+                                <span>(28)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price text-danger">17.990.000 ₫</span>
+                                <span class="old-price">19.490.000 ₫</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-icon-outline"><i class='bx bx-cart'></i></button>
+                                <button class="btn btn-primary btn-add-cart"><i class='bx bx-cart-add'></i> Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="badge badge-new">MỚI</div>
+                        <div class="product-img">
+                            <img src="https://placehold.co/200x150/f3f4f6/1f2937?text=VGA+GIGABYTE" alt="VGA">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Gigabyte GeForce RTX 4060 EAGLE OC 8GB GDDR6</h3>
+                            <div class="product-rating">
+                                <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bx-star'></i>
+                                <span>(15)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">9.490.000 ₫</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-icon-outline"><i class='bx bx-cart'></i></button>
+                                <button class="btn btn-primary btn-add-cart"><i class='bx bx-cart-add'></i> Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="badge badge-sale">-5%</div>
+                        <div class="product-img">
+                            <img src="https://placehold.co/200x150/f3f4f6/1f2937?text=VGA+ROG" alt="VGA">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">ASUS ROG Strix GeForce RTX 4080 16GB GDDR6X</h3>
+                            <div class="product-rating">
+                                <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i>
+                                <span>(18)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price text-danger">32.990.000 ₫</span>
+                                <span class="old-price">34.990.000 ₫</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-icon-outline"><i class='bx bx-cart'></i></button>
+                                <button class="btn btn-primary btn-add-cart"><i class='bx bx-cart-add'></i> Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                    </div>
+                     <div class="product-card">
+                        <div class="product-img">
+                            <img src="https://placehold.co/200x150/f3f4f6/1f2937?text=VGA+MSI+4060" alt="VGA">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">MSI GeForce RTX 4060 Gaming X 8GB GDDR6</h3>
+                            <div class="product-rating">
+                                <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star-half'></i>
+                                <span>(22)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">10.490.000 ₫</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-icon-outline"><i class='bx bx-cart'></i></button>
+                                <button class="btn btn-primary btn-add-cart"><i class='bx bx-cart-add'></i> Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="badge badge-sale">-7%</div>
+                        <div class="product-img">
+                            <img src="https://placehold.co/200x150/f3f4f6/1f2937?text=VGA+Colorful" alt="VGA">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Colorful iGame GeForce RTX 4070 Ti Ultra W OC 12GB</h3>
+                            <div class="product-rating">
+                                <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bx-star'></i>
+                                <span>(11)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price text-danger">22.990.000 ₫</span>
+                                <span class="old-price">24.690.000 ₫</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-icon-outline"><i class='bx bx-cart'></i></button>
+                                <button class="btn btn-primary btn-add-cart"><i class='bx bx-cart-add'></i> Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="badge badge-new">MỚI</div>
+                        <div class="product-img">
+                            <img src="https://placehold.co/200x150/f3f4f6/1f2937?text=VGA+ZOTAC" alt="VGA">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">ZOTAC Gaming GeForce RTX 4070 Twin Edge 12GB</h3>
+                            <div class="product-rating">
+                                <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bx-star'></i>
+                                <span>(9)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price">17.490.000 ₫</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-icon-outline"><i class='bx bx-cart'></i></button>
+                                <button class="btn btn-primary btn-add-cart"><i class='bx bx-cart-add'></i> Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="product-card">
+                        <div class="badge badge-sale">-10%</div>
+                        <div class="product-img">
+                            <img src="https://placehold.co/200x150/f3f4f6/1f2937?text=VGA+AORUS" alt="VGA">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-title">Gigabyte AORUS GeForce RTX 4080 Master 16GB</h3>
+                            <div class="product-rating">
+                                <i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i><i class='bx bxs-star'></i>
+                                <span>(7)</span>
+                            </div>
+                            <div class="product-price">
+                                <span class="current-price text-danger">33.990.000 ₫</span>
+                                <span class="old-price">37.990.000 ₫</span>
+                            </div>
+                            <div class="product-actions">
+                                <button class="btn btn-icon-outline"><i class='bx bx-cart'></i></button>
+                                <button class="btn btn-primary btn-add-cart"><i class='bx bx-cart-add'></i> Thêm vào giỏ</button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="pagination-area">
+                    <ul class="pagination">
+                        <li><a href="#" class="page-link"><i class='bx bx-chevron-left'></i></a></li>
+                        <li><a href="#" class="page-link active">1</a></li>
+                        <li><a href="#" class="page-link">2</a></li>
+                        <li><a href="#" class="page-link">3</a></li>
+                        <li><span class="page-dots">...</span></li>
+                        <li><a href="#" class="page-link">4</a></li>
+                        <li><a href="#" class="page-link"><i class='bx bx-chevron-right'></i></a></li>
+                    </ul>
+                    
+                    <div class="display-select">
+                        <span>Hiển thị:</span>
+                        <select class="form-control form-sm">
+                            <option>24 sản phẩm</option>
+                            <option>48 sản phẩm</option>
+                        </select>
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
 </body>
 </html>

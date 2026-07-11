@@ -1,5 +1,74 @@
-<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Đăng ký</title><link rel="stylesheet" href="assets/css/styles.css"></head>
-<body><header class="header"><div class="logo">Linh Kiện Shop</div><nav id="nav" class="nav"></nav></header>
-<main class="container"><section class="card" style="max-width:540px;margin:auto"><div class="card-body"><h2>Đăng ký tài khoản</h2><div id="notice" class="notice"></div>
-<form id="registerForm"><div class="form-row"><label>Họ tên</label><input name="fullName" required></div><div class="form-row"><label>Email</label><input name="email" type="email" required></div><div class="form-row"><label>Số điện thoại</label><input name="phone"></div><div class="form-row"><label>Địa chỉ</label><input name="address"></div><div class="form-row"><label>Mật khẩu</label><input name="password" type="password" required></div><button>Đăng ký</button></form></div></section></main>
-<script src="assets/js/api.js"></script><script src="assets/js/auth.js"></script></body></html>
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký - BlueTech</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
+<body>
+
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>Đăng Ký Tài Khoản</h1>
+            <p>Tham gia ngay để trải nghiệm mua sắm<br>và nhận nhiều ưu đãi hấp dẫn từ BlueTech!</p>
+        </div>
+
+        <form action="#" method="POST" id="registerForm">
+            <div class="input-group">
+                <i class='bx bx-user icon-left'></i>
+                <input type="text" class="form-control" placeholder="Họ và tên" required>
+            </div>
+
+            <div class="input-group">
+                <i class='bx bx-envelope icon-left'></i>
+                <input type="email" class="form-control" placeholder="Email" required>
+            </div>
+
+            <div class="input-group">
+                <i class='bx bx-phone icon-left'></i>
+                <input type="tel" class="form-control" placeholder="Số điện thoại" required>
+            </div>
+
+            <div class="input-group">
+                <i class='bx bx-lock-alt icon-left'></i>
+                <input type="password" class="form-control" id="reg-password" placeholder="Mật khẩu" required>
+                <i class='bx bx-hide icon-right toggle-password' data-target="reg-password"></i>
+            </div>
+
+            <div class="input-group">
+                <i class='bx bx-check-shield icon-left'></i>
+                <input type="password" class="form-control" id="reg-confirm-password" placeholder="Xác nhận mật khẩu" required>
+                <i class='bx bx-show icon-right toggle-password' data-target="reg-confirm-password"></i>
+            </div>
+
+            <div class="options-group" style="justify-content: flex-start;">
+                <label class="checkbox-label">
+                    <input type="checkbox" required checked> 
+                    <span>Tôi đồng ý với <a href="#" class="link">Điều khoản sử dụng</a> và <a href="#" class="link">Chính sách bảo mật</a></span>
+                </label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">ĐĂNG KÝ</button>
+        </form>
+
+        <div class="divider">HOẶC</div>
+
+        <button class="btn btn-social">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
+            Đăng ký với Google
+        </button>
+        <button class="btn btn-social">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook">
+            Đăng ký với Facebook
+        </button>
+
+        <div class="auth-footer">
+            Đã có tài khoản? <a href="login.html" class="link">Đăng nhập ngay</a>
+        </div>
+    </div>
+
+    <script src="assets/js/auth.js"></script>
+</body>
+</html>
