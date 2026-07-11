@@ -16,7 +16,15 @@ function createOrder(user, payload) {
   }
 
   const shippingAddress = payload.shippingAddress || user.address;
-  if (!shippingAddress) throw new Error('Vui lòng nhập địa chỉ giao hàng.');
+  const customerName = String(payload.customerName || user.fullName || '').trim();
+  const customerPhone = String(payload.customerPhone || user.phone || '').trim();
+  const normalizedAddress = String(shippingAddress || '').trim();
+  if (!customerName || !customerPhone || !normalizedAddress) {
+    throw new Error('Vui lòng nhập đầy đủ họ tên, số điện thoại và địa chỉ giao hàng.');
+  }
+  if (!/^(0|\+84)\d{9}$/.test(customerPhone.replace(/[\s.-]/g, ''))) throw new Error('Số điện thoại giao hàng không hợp lệ.');
+  const paymentMethod = payload.paymentMethod || 'COD';
+  if (!['COD', 'ONLINE'].includes(paymentMethod)) throw new Error('Phương thức thanh toán không hợp lệ.');
 
   const order = {
     id: uuid(), customerId: user.id,
@@ -27,11 +35,13 @@ function createOrder(user, payload) {
       unitPrice: item.product.price
     })),
     totalAmount: cart.total,
-    paymentMethod: payload.paymentMethod || 'COD',
+    customerName,
+    customerPhone,
+    paymentMethod,
     paymentStatus: 'UNPAID',
-    shippingAddress,
+    shippingAddress: normalizedAddress,
     shippingStatus: 'PENDING',
-    status: payload.paymentMethod === 'ONLINE' ? 'WAITING_PAYMENT' : 'WAITING_CONFIRM',
+    status: paymentMethod === 'ONLINE' ? 'WAITING_PAYMENT' : 'WAITING_CONFIRM',
     createdAt: new Date().toISOString()
   };
 
@@ -42,6 +52,7 @@ function createOrder(user, payload) {
 
   db.orders.push(order);
   paymentService.processPayment(db, order, order.paymentMethod);
+  if (order.paymentStatus === 'PAID') order.status = 'WAITING_CONFIRM';
   shippingService.createShipment(db, order);
   notificationService.send(db, user, 'ORDER_CREATED', `Đơn hàng ${order.id} đã được tạo thành công.`);
   cartService.clearCart(user.id, db);

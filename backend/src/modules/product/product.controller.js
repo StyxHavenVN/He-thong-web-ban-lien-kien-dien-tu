@@ -1,5 +1,5 @@
 const productService = require('./product.service');
-function list(req,res){ res.json(productService.listProducts(req.query)); }
+function list(req,res){ try{ res.json(productService.listProducts(req.query)); }catch(e){ res.status(400).json({message:e.message}); } }
 function detail(req,res){ try{ res.json(productService.getProduct(req.params.id)); }catch(e){ res.status(404).json({message:e.message}); } }
 function recommendations(req,res){ try{ res.json(productService.getRecommendations(req.params.id)); }catch(e){ res.status(404).json({message:e.message}); } }
 function categories(req,res){ res.json(productService.listCategories()); }

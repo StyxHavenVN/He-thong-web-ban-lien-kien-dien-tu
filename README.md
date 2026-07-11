@@ -156,3 +156,33 @@ Nhân viên kho: staff@shop.local / 123456
 - `backend` chạy bằng Node.js tại cổng 3000.
 - Frontend gọi API qua đường dẫn `/api`, Nginx sẽ proxy request sang backend.
 - Dữ liệu prototype được lưu tại `backend/src/data/db.json` và được mount vào container backend để dữ liệu không mất khi restart container.
+
+## 9. Phạm vi Sprint 1 - luồng khách hàng end-to-end
+
+Sprint 1 hoàn chỉnh các yêu cầu FR01-FR08 và phần gợi ý tương thích của FR17:
+
+- Đăng ký tài khoản với kiểm tra dữ liệu bắt buộc, email trùng, định dạng email, số điện thoại và mật khẩu tối thiểu 6 ký tự.
+- Đăng nhập theo vai trò và không trả `passwordHash` về phía trình duyệt.
+- Xem, tìm kiếm, lọc theo danh mục, hãng, khoảng giá, cấu hình; sắp xếp và phân trang sản phẩm.
+- Xem chi tiết sản phẩm, thông số kỹ thuật, tồn kho và trạng thái ngừng kinh doanh.
+- Gợi ý linh kiện theo socket CPU/Mainboard, chuẩn RAM và công suất VGA/PSU.
+- Thêm, cập nhật số lượng và xóa sản phẩm khỏi giỏ; kiểm tra tồn kho ở từng thao tác.
+- Đặt hàng với đầy đủ người nhận, số điện thoại, địa chỉ và phương thức thanh toán.
+- Xem danh sách và chi tiết đơn hàng thuộc tài khoản đang đăng nhập.
+
+Các endpoint chính dùng trong Sprint 1:
+
+```text
+POST   /api/auth/register
+POST   /api/auth/login
+GET    /api/products
+GET    /api/products/:id
+GET    /api/products/:id/recommendations
+GET    /api/cart
+POST   /api/cart/items
+PUT    /api/cart/items/:productId
+DELETE /api/cart/items/:productId
+POST   /api/orders
+GET    /api/orders/my
+GET    /api/orders/:id
+```

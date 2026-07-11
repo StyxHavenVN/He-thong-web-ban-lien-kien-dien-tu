@@ -1,101 +1,45 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // Ẩn/hiện mật khẩu
-    document.querySelectorAll('.toggle-password').forEach(icon => {
-        icon.addEventListener('click', function () {
-            const targetId = this.getAttribute('data-target');
-            const passwordInput = document.getElementById(targetId);
-
-            if (!passwordInput) return;
-
-            const isHidden = passwordInput.type === 'password';
-            passwordInput.type = isHidden ? 'text' : 'password';
-
-            this.classList.toggle('bx-hide', !isHidden);
-            this.classList.toggle('bx-show', isHidden);
-        });
+  document.querySelectorAll('.toggle-password').forEach(button => {
+    button.addEventListener('click', () => {
+      const input = document.getElementById(button.dataset.target);
+      if (!input) return;
+      const reveal = input.type === 'password';
+      input.type = reveal ? 'text' : 'password';
+      button.textContent = reveal ? 'Ẩn' : 'Hiện';
+      button.setAttribute('aria-label', reveal ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
     });
+  });
 
-    // Đăng nhập
-    const loginForm = document.querySelector('#loginForm');
+  const loginForm = document.querySelector('#loginForm');
+  loginForm?.addEventListener('submit', async event => {
+    event.preventDefault();
+    const button = loginForm.querySelector('button[type="submit"]');
+    const formData = Object.fromEntries(new FormData(loginForm));
+    try {
+      button.disabled = true; button.textContent = 'Đang đăng nhập...';
+      const data = await api('/api/auth/login', { method: 'POST', body: JSON.stringify(formData) });
+      setSession(data);
+      const requested = new URLSearchParams(location.search).get('return');
+      const safeReturn = requested && /^[\w-]+\.html(?:\?.*)?$/.test(requested) ? requested : null;
+      location.href = data.user.role === 'CUSTOMER' ? (safeReturn || 'index.html') : 'admin.html';
+    } catch (error) { showNotice(error.message, 'error'); }
+    finally { button.disabled = false; button.textContent = 'Đăng nhập'; }
+  });
 
-    if (loginForm) {
-        loginForm.addEventListener('submit', async event => {
-            event.preventDefault();
-
-            const submitButton = loginForm.querySelector(
-                'button[type="submit"]'
-            );
-
-            const formData = Object.fromEntries(
-                new FormData(loginForm)
-            );
-
-            try {
-                if (submitButton) {
-                    submitButton.disabled = true;
-                    submitButton.textContent = 'ĐANG ĐĂNG NHẬP...';
-                }
-
-                const data = await api('/api/auth/login', {
-                    method: 'POST',
-                    body: JSON.stringify({
-                        email: formData.email,
-                        password: formData.password
-                    })
-                });
-
-                setSession(data);
-
-                location.href =
-                    data.user.role === 'CUSTOMER'
-                        ? 'index.html'
-                        : 'admin.html';
-            } catch (error) {
-                showNotice(error.message, 'error');
-            } finally {
-                if (submitButton) {
-                    submitButton.disabled = false;
-                    submitButton.textContent = 'ĐĂNG NHẬP';
-                }
-            }
-        });
-    }
-
-    // Đăng ký
-    const registerForm = document.querySelector('#registerForm');
-
-    if (registerForm) {
-        registerForm.addEventListener('submit', async event => {
-            event.preventDefault();
-
-            const formData = Object.fromEntries(
-                new FormData(registerForm)
-            );
-
-            if (
-                formData.confirmPassword &&
-                formData.password !== formData.confirmPassword
-            ) {
-                showNotice(
-                    'Mật khẩu xác nhận không khớp.',
-                    'error'
-                );
-                return;
-            }
-
-            delete formData.confirmPassword;
-
-            try {
-                const data = await api('/api/auth/register', {
-                    method: 'POST',
-                    body: JSON.stringify(formData)
-                });
-
-                setSession(data);
-                location.href = 'index.html';
-            } catch (error) {
-                showNotice(error.message, 'error');
-            }
-        });
-    }
+  const registerForm = document.querySelector('#registerForm');
+  registerForm?.addEventListener('submit', async event => {
+    event.preventDefault();
+    const button = registerForm.querySelector('button[type="submit"]');
+    const formData = Object.fromEntries(new FormData(registerForm));
+    if (formData.password !== formData.confirmPassword) return showNotice('Mật khẩu xác nhận không khớp.', 'error');
+    delete formData.confirmPassword;
+    try {
+      button.disabled = true; button.textContent = 'Đang tạo tài khoản...';
+      const data = await api('/api/auth/register', { method: 'POST', body: JSON.stringify(formData) });
+      setSession(data);
+      sessionStorage.setItem('flash', 'Đăng ký thành công. Chào mừng bạn đến với BlueTech!');
+      location.href = 'index.html';
+    } catch (error) { showNotice(error.message, 'error'); }
+    finally { button.disabled = false; button.textContent = 'Tạo tài khoản'; }
+  });
 });

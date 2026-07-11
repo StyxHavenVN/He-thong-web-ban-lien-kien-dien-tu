@@ -29,6 +29,16 @@
       "role": "CUSTOMER",
       "passwordHash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
       "locked": false
+    },
+    {
+      "id": "5c9aa036-3703-48b3-b541-f3f1dfe7d862",
+      "fullName": "Test User",
+      "email": "testuser@test.com",
+      "phone": "0123456789",
+      "address": "123 Test St",
+      "role": "CUSTOMER",
+      "passwordHash": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+      "locked": false
     }
   ],
   "categories": [
@@ -64,7 +74,7 @@
       "categoryId": "cat-cpu",
       "brand": "Intel",
       "price": 3390000,
-      "stock": 12,
+      "stock": 11,
       "image": "https://via.placeholder.com/400x250?text=Intel+i5",
       "description": "CPU 6 nhân 12 luồng, phù hợp chơi game và học tập.",
       "specs": {
@@ -176,9 +186,99 @@
       }
     }
   ],
-  "carts": {},
-  "orders": [],
-  "payments": [],
-  "shipments": [],
-  "notifications": []
+  "carts": {
+    "u-customer": []
+  },
+  "orders": [
+    {
+      "id": "f419a2c8-fc15-47bb-b77b-f00ab864282a",
+      "customerId": "u-customer",
+      "items": [
+        {
+          "productId": "p-cpu-i5",
+          "productName": "Intel Core i5-12400F",
+          "quantity": 1,
+          "unitPrice": 3390000
+        }
+      ],
+      "totalAmount": 3390000,
+      "customerName": "Nguyen Van Test",
+      "customerPhone": "0123456789",
+      "paymentMethod": "COD",
+      "paymentStatus": "UNPAID",
+      "shippingAddress": "123 Test Street",
+      "shippingStatus": "CREATED",
+      "status": "COMPLETED",
+      "createdAt": "2026-07-11T19:22:40.396Z",
+      "trackingCode": "VC569356",
+      "updatedAt": "2026-07-11T19:24:25.622Z"
+    }
+  ],
+  "payments": [
+    {
+      "id": "4b65e1a1-1ef0-4669-8c38-3f8c8d101ee0",
+      "orderId": "f419a2c8-fc15-47bb-b77b-f00ab864282a",
+      "amount": 3390000,
+      "method": "COD",
+      "status": "PENDING_COD",
+      "createdAt": "2026-07-11T19:22:40.397Z"
+    }
+  ],
+  "shipments": [
+    {
+      "id": "aba21d76-373d-4d2f-bcba-78254554b2b8",
+      "orderId": "f419a2c8-fc15-47bb-b77b-f00ab864282a",
+      "trackingCode": "VC569356",
+      "fee": 30000,
+      "status": "CREATED",
+      "createdAt": "2026-07-11T19:22:40.398Z"
+    }
+  ],
+  "notifications": [
+    {
+      "id": "cb333fb0-e751-4a3b-a2cc-01ee4b836643",
+      "userId": "u-customer",
+      "type": "ORDER_CREATED",
+      "recipient": "customer@shop.local",
+      "content": "Đơn hàng f419a2c8-fc15-47bb-b77b-f00ab864282a đã được tạo thành công.",
+      "status": "SENT",
+      "createdAt": "2026-07-11T19:22:40.398Z"
+    },
+    {
+      "id": "2c375f3d-3ea2-488a-ba93-e51de7f129cf",
+      "userId": "u-customer",
+      "type": "ORDER_STATUS",
+      "recipient": "customer@shop.local",
+      "content": "Đơn hàng f419a2c8-fc15-47bb-b77b-f00ab864282a được cập nhật sang trạng thái PROCESSING.",
+      "status": "SENT",
+      "createdAt": "2026-07-11T19:23:44.622Z"
+    },
+    {
+      "id": "9acf456c-44e6-490b-add2-12c00a96d2b2",
+      "userId": "u-customer",
+      "type": "ORDER_STATUS",
+      "recipient": "customer@shop.local",
+      "content": "Đơn hàng f419a2c8-fc15-47bb-b77b-f00ab864282a được cập nhật sang trạng thái PROCESSING.",
+      "status": "SENT",
+      "createdAt": "2026-07-11T19:24:00.166Z"
+    },
+    {
+      "id": "f1fd0b89-caca-4211-8703-c3465f8f20a3",
+      "userId": "u-customer",
+      "type": "ORDER_STATUS",
+      "recipient": "customer@shop.local",
+      "content": "Đơn hàng f419a2c8-fc15-47bb-b77b-f00ab864282a được cập nhật sang trạng thái SHIPPING.",
+      "status": "SENT",
+      "createdAt": "2026-07-11T19:24:04.400Z"
+    },
+    {
+      "id": "5f112265-1181-48ae-ba17-1d8be10c5d2d",
+      "userId": "u-customer",
+      "type": "ORDER_STATUS",
+      "recipient": "customer@shop.local",
+      "content": "Đơn hàng f419a2c8-fc15-47bb-b77b-f00ab864282a được cập nhật sang trạng thái COMPLETED.",
+      "status": "SENT",
+      "createdAt": "2026-07-11T19:24:25.622Z"
+    }
+  ]
 }
