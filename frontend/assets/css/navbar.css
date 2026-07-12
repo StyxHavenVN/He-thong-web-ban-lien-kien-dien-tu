@@ -1,0 +1,52 @@
+/* ===== NAVBAR ===== */
+.main-nav {
+  background: linear-gradient(90deg, var(--blue-700) 0%, var(--blue-600) 100%);
+  box-shadow: 0 3px 10px rgba(0, 70, 160, 0.25);
+}
+
+.nav-container {
+  display: flex;
+  align-items: stretch;
+  justify-content: space-between;
+  gap: 0;
+  padding: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-container::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-item {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 14px 12px;
+  color: rgba(255, 255, 255, 0.88);
+  white-space: nowrap;
+  flex: 1;
+  border-bottom: 3px solid transparent;
+  transition:
+    background 0.15s,
+    color 0.15s,
+    border-color 0.15s;
+}
+
+.nav-item:first-child {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.15);
+  border-bottom-color: var(--white);
+}
+
+.nav-item:hover {
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.12);
+  border-bottom-color: rgba(255, 255, 255, 0.6);
+}

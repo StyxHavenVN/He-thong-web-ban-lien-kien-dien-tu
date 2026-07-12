@@ -1,0 +1,137 @@
+/* ===== RESPONSIVE ===== */
+
+/* Large screens */
+@media (max-width: 1280px) {
+  .category-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+  .product-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* Medium */
+@media (max-width: 1024px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar-menu {
+    display: none;
+  }
+
+  .hero-banners {
+    grid-template-columns: 1fr;
+    height: auto;
+  }
+
+  .sub-banners {
+    flex-direction: row;
+    height: 130px;
+  }
+
+  .trust-bar {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .trust-item:not(:last-child)::after {
+    display: none;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+  .bottom-promo-banners {
+    grid-template-columns: 1fr;
+  }
+
+  .top-bar-center {
+    display: none;
+  }
+}
+
+/* Tablet */
+@media (max-width: 768px) {
+  .header-container {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .logo img {
+    height: 52px;
+  }
+
+  .search-bar {
+    order: 3;
+    max-width: 100%;
+    flex: 1 1 100%;
+  }
+
+  .action-text {
+    display: none;
+  }
+  .header-actions {
+    gap: 4px;
+  }
+
+  .nav-container {
+    gap: 0;
+    padding: 0;
+  }
+  .nav-item {
+    font-size: 13px;
+    padding: 11px 12px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .top-bar-left {
+    display: none;
+  }
+  .top-bar-right {
+    gap: 10px;
+    font-size: 11.5px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 12px;
+  }
+
+  .sub-banners {
+    flex-direction: column;
+    height: auto;
+  }
+
+  .sub-banner-item {
+    min-height: 90px;
+  }
+
+  .trust-bar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .category-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .category-tabs {
+    display: none;
+  }
+
+  .bottom-promo-banners {
+    grid-template-columns: 1fr;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
