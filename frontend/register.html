@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng ký - BlueTech</title>
     <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="stylesheet" href="assets/css/auth.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
-<body>
+<body class="auth-body">
 
     <div class="auth-container">
         <div class="auth-header">
@@ -40,7 +41,7 @@
             <div class="input-group">
                 <i class='bx bx-check-shield icon-left'></i>
                 <input type="password" class="form-control" id="reg-confirm-password" placeholder="Xác nhận mật khẩu" required>
-                <i class='bx bx-show icon-right toggle-password' data-target="reg-confirm-password"></i>
+                <i class='bx bx-hide icon-right toggle-password' data-target="reg-confirm-password"></i>
             </div>
 
             <div class="options-group" style="justify-content: flex-start;">
@@ -50,16 +51,16 @@
                 </label>
             </div>
 
-            <button type="submit" class="btn btn-primary">ĐĂNG KÝ</button>
+            <button type="submit" class="btn-auth">ĐĂNG KÝ</button>
         </form>
 
-        <div class="divider">HOẶC</div>
+        <div class="auth-divider">HOẶC</div>
 
-        <button class="btn btn-social">
+        <button class="btn-social">
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg" alt="Google">
             Đăng ký với Google
         </button>
-        <button class="btn btn-social">
+        <button class="btn-social">
             <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" alt="Facebook">
             Đăng ký với Facebook
         </button>
