@@ -35,9 +35,9 @@ document.addEventListener('DOMContentLoaded', async function() {
                 const cardHTML = `
                     <div class="catalog-card">
                         ${badgeHTML}
-                        <div class="catalog-img">
-                            <img src="https://placehold.co/200x150/ffffff/555f6e?text=${product.name.split(' ')[0]}+${product.name.split(' ')[1]}" alt="${product.name}">
-                        </div>
+                            <div class="catalog-img">
+                                <img src="${product.image}" alt="${product.name}">
+                            </div>
                         <div class="catalog-title">${product.name}</div>
                         <div class="catalog-rating">
                             <i class="fi fi-sr-star"></i><i class="fi fi-sr-star"></i><i class="fi fi-sr-star"></i><i class="fi fi-sr-star"></i><i class="fi fi-sr-star"></i>
