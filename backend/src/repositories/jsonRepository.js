@@ -1,15 +1,35 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
-const DB_PATH = path.join(__dirname, '..', 'data', 'db.json');
+const DB_PATH = path.join(__dirname, '../data/db.json');
 
-function readDb() {
-  const raw = fs.readFileSync(DB_PATH, 'utf-8');
-  return JSON.parse(raw);
-}
+// Đọc dữ liệu từ file JSON
+const readData = async (collectionName) => {
+    try {
+        const data = await fs.readFile(DB_PATH, 'utf8');
+        const parsedData = JSON.parse(data);
+        return parsedData[collectionName] || [];
+    } catch (error) {
+        // Nếu file chưa có dữ liệu, trả về mảng rỗng
+        return [];
+    }
+};
 
-function writeDb(data) {
-  fs.writeFileSync(DB_PATH, JSON.stringify(data, null, 2), 'utf-8');
-}
+// Ghi đè dữ liệu vào file JSON
+const writeData = async (collectionName, dataArray) => {
+    let parsedData = {};
+    try {
+        const data = await fs.readFile(DB_PATH, 'utf8');
+        parsedData = JSON.parse(data);
+    } catch (error) {
+        // Bỏ qua lỗi nếu file chưa tồn tại
+    }
 
-module.exports = { readDb, writeDb };
+    parsedData[collectionName] = dataArray;
+    await fs.writeFile(DB_PATH, JSON.stringify(parsedData, null, 2), 'utf8');
+};
+
+module.exports = {
+    readData,
+    writeData
+};

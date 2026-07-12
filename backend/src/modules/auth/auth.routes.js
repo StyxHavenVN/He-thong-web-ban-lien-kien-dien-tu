@@ -1,8 +1,11 @@
 const express = require('express');
-const controller = require('./auth.controller');
-const { requireAuth } = require('../../middleware/authMiddleware');
 const router = express.Router();
-router.post('/register', controller.register);
-router.post('/login', controller.login);
-router.get('/me', requireAuth, controller.me);
+const authController = require('./auth.controller');
+
+// Đăng ký - POST /api/auth/register
+router.post('/register', authController.register);
+
+// Đăng nhập - POST /api/auth/login
+router.post('/login', authController.login);
+
 module.exports = router;

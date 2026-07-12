@@ -1,13 +1,46 @@
 const authService = require('./auth.service');
 
-function register(req, res) {
-  try { res.status(201).json(authService.register(req.body)); }
-  catch (err) { res.status(400).json({ message: err.message }); }
-}
-function login(req, res) {
-  try { res.json(authService.login(req.body)); }
-  catch (err) { res.status(400).json({ message: err.message }); }
-}
-function me(req, res) { res.json({ user: authService.publicUser(req.user) }); }
+const register = async (req, res) => {
+    try {
+        // Chuyển dữ liệu từ body xuống tầng Service xử lý
+        const result = await authService.register(req.body);
+        
+        // Trả về mã 201 Created khi tạo tài khoản thành công
+        res.status(201).json({
+            success: true,
+            message: result.message,
+            data: result.user
+        });
+    } catch (error) {
+        // Xử lý lỗi trả về từ tầng Service
+        const statusCode = error.statusCode || 500;
+        res.status(statusCode).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
 
-module.exports = { register, login, me };
+const login = async (req, res) => {
+    try {
+        const result = await authService.login(req.body);
+        
+        res.status(200).json({
+            success: true,
+            message: result.message,
+            token: result.token,
+            data: result.user
+        });
+    } catch (error) {
+        const statusCode = error.statusCode || 500;
+        res.status(statusCode).json({
+            success: false,
+            message: error.message
+        });
+    }
+};
+
+module.exports = {
+    register,
+    login
+};

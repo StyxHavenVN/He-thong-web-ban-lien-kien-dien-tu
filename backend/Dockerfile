@@ -1,12 +1,18 @@
-FROM node:20-alpine
+# Sử dụng image Node.js gọn nhẹ
+FROM node:18-alpine
 
-WORKDIR /app/backend
+# Thiết lập thư mục làm việc trong container
+WORKDIR /app
 
+# Copy package.json và cài đặt dependencies
 COPY backend/package*.json ./
-RUN npm install --omit=dev
+RUN npm install
 
-COPY backend ./
+# Copy toàn bộ mã nguồn backend vào container
+COPY backend/ ./
 
+# Mở cổng 3000 cho Node.js
 EXPOSE 3000
 
+# Lệnh khởi chạy server
 CMD ["npm", "start"]

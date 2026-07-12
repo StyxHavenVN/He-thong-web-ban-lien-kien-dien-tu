@@ -1,4 +1,22 @@
+version: '3.8'
+
 services:
+  # Thêm dịch vụ Database PostgreSQL
+  db:
+    image: postgres:15-alpine
+    container_name: web-linh-kien-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: rootpassword
+      POSTGRES_DB: web_linh_kien
+    ports:
+      - "5432:5432"
+    networks:
+      - web-linh-kien-network
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
   backend:
     build:
       context: .
@@ -9,17 +27,19 @@ services:
       NODE_ENV: production
       PORT: 3000
       JWT_SECRET: do-an-c4-secret-key
-    volumes:
-      - ./backend/src/data:/app/backend/src/data
+      # Thêm chuỗi kết nối Database cho backend
+      DATABASE_URL: postgres://root:rootpassword@db:5432/web_linh_kien
     ports:
       - "3000:3000"
+    depends_on:
+      - db
     networks:
       - web-linh-kien-network
 
   frontend:
     build:
-      context: .
-      dockerfile: frontend/Dockerfile
+      context: ./frontend
+      dockerfile: Dockerfile
     container_name: web-linh-kien-frontend
     restart: unless-stopped
     depends_on:
@@ -32,3 +52,6 @@ services:
 networks:
   web-linh-kien-network:
     driver: bridge
+
+volumes:
+  pgdata: # Dùng để lưu trữ dữ liệu SQL không bị mất khi tắt Docker

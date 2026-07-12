@@ -203,6 +203,38 @@ body {
     color: var(--text-muted);
 }
 
+/* ================= GIAO DIỆN SAU KHI ĐĂNG NHẬP ================= */
+.user-logged-in {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.user-name {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--primary-color);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 130px; /* Giới hạn độ dài tên để không làm vỡ khung */
+    display: block;
+}
+
+.logout-link {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-decoration: none;
+    cursor: pointer;
+    margin-top: 2px;
+    display: block;
+    font-weight: 400;
+}
+
+.logout-link:hover {
+    color: var(--danger-color);
+    text-decoration: underline;
+}
 
 /* ================= 2. GIAO DIỆN TRANG SẢN PHẨM ================= */
 

@@ -1,38 +1,45 @@
 const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
-const path = require('path');
-const fs = require('fs');
-
-const authRoutes = require('./modules/auth/auth.routes');
-const productRoutes = require('./modules/product/product.routes');
-const cartRoutes = require('./modules/cart/cart.routes');
-const orderRoutes = require('./modules/order/order.routes');
-const adminRoutes = require('./modules/admin/admin.routes');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// ================= MIDDLEWARE =================
 app.use(cors());
 app.use(express.json());
-app.use(morgan('dev'));
+app.use(morgan('dev')); // Tự động in log ra terminal
 
+// ================= KẾT NỐI DATABASE POSTGRESQL =================
+const sequelize = require('./data/config/database');
+
+// Đồng bộ các Model (Bảng) vào Database
+sequelize.sync({ alter: true })
+    .then(() => console.log('✅ PostgreSQL Database connected and synchronized.'))
+    .catch(err => console.error('❌ Database connection error:', err));
+
+
+// ================= API ROUTES (MODULAR) =================
+// Import các route từ các module
+const authRoutes = require('./modules/auth/auth.routes');
+
+// Gắn route vào app
 app.use('/api/auth', authRoutes);
-app.use('/api/products', productRoutes);
-app.use('/api/cart', cartRoutes);
-app.use('/api/orders', orderRoutes);
-app.use('/api/admin', adminRoutes);
 
-app.get('/api/health', (req, res) => res.json({ status: 'OK', message: 'Backend API đang hoạt động.' }));
+// Dữ liệu sản phẩm giả lập tạm thời (Chờ bạn làm FR03 - Module Product)
+const tempProducts = [
+    { id: 1, name: "ASUS TUF Gaming GeForce RTX 4060 Ti", price: 11990000, oldPrice: null, rating: 4.5, reviews: 32, badge: "MỚI" },
+    { id: 2, name: "MSI GeForce RTX 4070 Ventus 3X", price: 17990000, oldPrice: 19490000, rating: 4.0, reviews: 28, badge: "-8%" },
+    { id: 3, name: "Gigabyte GeForce RTX 4060 EAGLE OC", price: 9490000, oldPrice: null, rating: 4.0, reviews: 15, badge: "MỚI" },
+    { id: 4, name: "ASUS ROG Strix GeForce RTX 4080", price: 32990000, oldPrice: 34990000, rating: 5.0, reviews: 18, badge: "-5%" }
+];
 
-const frontendPath = path.join(__dirname, '..', '..', 'frontend');
-if (fs.existsSync(path.join(frontendPath, 'index.html'))) {
-  app.use(express.static(frontendPath));
-  app.get('*', (req, res) => res.sendFile(path.join(frontendPath, 'index.html')));
-} else {
-  app.get('*', (req, res) => res.status(404).json({ message: 'Frontend không được phục vụ từ Backend container.' }));
-}
+app.get('/api/products', (req, res) => {
+    res.json({ success: true, data: tempProducts });
+});
 
+
+// ================= START SERVER =================
 app.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}`);
+    console.log(`🚀 Backend server is running on port ${PORT}`);
 });
