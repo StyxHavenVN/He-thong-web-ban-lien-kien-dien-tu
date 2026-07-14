@@ -2,12 +2,32 @@ const productService = require('./product.service');
 
 const getProducts = async (req, res) => {
     try {
-        // Lấy tất cả tham số truy vấn (?keyword=...&brand=...) truyền vào hàm Service
-        const products = await productService.getAllProducts(req.query);
-        res.status(200).json({ success: true, data: products });
+        const result = await productService.getAllProducts(req.query);
+        res.status(200).json({
+            success: true,
+            data: result.products,
+            pagination: result.pagination
+        });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        const statusCode = error.statusCode || 500;
+        res.status(statusCode).json({ success: false, message: error.message });
     }
 };
 
-module.exports = { getProducts };
+const getProductDetail = async (req, res) => {
+    try {
+        const product = await productService.getProductById(req.params.id);
+        res.status(200).json({
+            success: true,
+            data: product
+        });
+    } catch (error) {
+        const statusCode = error.statusCode || 500;
+        res.status(statusCode).json({ success: false, message: error.message });
+    }
+};
+
+module.exports = {
+    getProducts,
+    getProductDetail
+};

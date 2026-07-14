@@ -1,28 +1,21 @@
-const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
 const SECRET = process.env.JWT_SECRET || 'do-an-c4-secret-key';
-
-function base64url(input) {
-  return Buffer.from(input).toString('base64url');
-}
+const EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
 
 function sign(payload) {
-  const body = base64url(JSON.stringify(payload));
-  const signature = crypto.createHmac('sha256', SECRET).update(body).digest('base64url');
-  return `${body}.${signature}`;
+  return jwt.sign(payload, SECRET, { expiresIn: EXPIRES_IN });
 }
 
 function verify(token) {
-  if (!token || !token.includes('.')) return null;
-  const [body, signature] = token.split('.');
-  const expected = crypto.createHmac('sha256', SECRET).update(body).digest('base64url');
-  if (signature !== expected) return null;
   try {
-    return JSON.parse(Buffer.from(body, 'base64url').toString('utf-8'));
-  } catch {
+    return jwt.verify(token, SECRET);
+  } catch (error) {
     return null;
   }
 }
 
+// Giữ lại tương thích ngược nếu cần
+const crypto = require('crypto');
 function hashPassword(password) {
   return crypto.createHash('sha256').update(password).digest('hex');
 }

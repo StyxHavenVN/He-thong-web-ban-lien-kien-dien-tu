@@ -2,12 +2,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const userAuthArea = document.getElementById('user-auth-area');
     
     if (userAuthArea) {
-        // Lấy thông tin user và token từ LocalStorage (được lưu lúc login thành công)
-        const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-        const token = localStorage.getItem('accessToken');
+        // Lấy thông tin user và token từ LocalStorage (thống nhất khóa token/user)
+        const userInfo = JSON.parse(localStorage.getItem('user'));
+        const token = localStorage.getItem('token');
 
         if (userInfo && token) {
-            // Lấy tên ngắn gọn (Ví dụ: "Đoàn Bảo Khanh" -> "Đoàn Bảo Khanh")
+            // Lấy tên hiển thị
             const displayName = userInfo.fullname || userInfo.email.split('@')[0];
 
             // Thay đổi giao diện
@@ -22,14 +22,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const logoutBtn = document.getElementById('logout-btn');
             if (logoutBtn) {
                 logoutBtn.addEventListener('click', function(e) {
-                    e.preventDefault(); // Ngăn chặn reload mặc định của thẻ <a>
+                    e.preventDefault();
                     
-                    // 1. Xóa dữ liệu trong LocalStorage
-                    localStorage.removeItem('accessToken');
-                    localStorage.removeItem('userInfo');
+                    // Xóa dữ liệu trong LocalStorage
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
                     
-                    // 2. Chuyển hướng về trang chủ và làm mới giao diện
-                    window.location.reload();
+                    // Chuyển hướng về trang chủ và làm mới giao diện
+                    window.location.href = 'index.html';
                 });
             }
         }
@@ -60,9 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.getElementById('registerForm');
     if (registerForm) {
         registerForm.addEventListener('submit', async function(e) {
-            e.preventDefault(); // CHẶN reload trang (ngăn lỗi 405 của Nginx)
+            e.preventDefault();
 
-            // Lấy dữ liệu từ các ô input
             const fullname = document.getElementById('fullname').value;
             const email = document.getElementById('email').value;
             const phone = document.getElementById('phone').value;
@@ -76,8 +75,10 @@ document.addEventListener('DOMContentLoaded', function() {
             }
 
             try {
-                // Gọi API backend qua Nginx proxy (/api/auth/register)
-                const response = await fetch('/api/auth/register', {
+                // Tự động lấy nguồn gốc host để tránh lỗi CORS khi dev local
+                const API_BASE = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1') ? 'http://localhost:3000' : '';
+                
+                const response = await fetch(`${API_BASE}/api/auth/register`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ fullname, email, phone, password })
@@ -86,10 +87,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 const data = await response.json();
 
                 if (response.ok && data.success) {
-                    alert(data.message); // Báo thành công
-                    window.location.href = 'login.html'; // Chuyển hướng sang trang đăng nhập
+                    alert(data.message);
+                    window.location.href = 'login.html';
                 } else {
-                    alert("Lỗi: " + data.message); // Báo lỗi (ví dụ: email đã tồn tại)
+                    alert("Lỗi: " + data.message);
                 }
             } catch (error) {
                 console.error("Lỗi kết nối API:", error);
@@ -104,13 +105,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const loginForm = document.getElementById('loginForm');
     if (loginForm) {
         loginForm.addEventListener('submit', async function(e) {
-            e.preventDefault(); // CHẶN reload trang
+            e.preventDefault();
 
             const email = document.getElementById('login-email').value;
             const password = document.getElementById('login-password').value;
 
             try {
-                const response = await fetch('/api/auth/login', {
+                const API_BASE = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1') ? 'http://localhost:3000' : '';
+
+                const response = await fetch(`${API_BASE}/api/auth/login`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email, password })
@@ -120,14 +123,18 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if (response.ok && data.success) {
                     alert(data.message);
-                    // Lưu JWT Token vào LocalStorage để dùng cho các API sau này
-                    localStorage.setItem('accessToken', data.token);
-                    localStorage.setItem('userInfo', JSON.stringify(data.data));
+                    // Lưu JWT Token và User Info vào LocalStorage
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('user', JSON.stringify(data.data));
                     
-                    // Chuyển hướng về trang chủ
-                    window.location.href = 'index.html'; 
+                    // Điều hướng theo vai trò (Role-Based Redirect)
+                    if (data.data.role === 'ADMIN' || data.data.role === 'STAFF') {
+                        window.location.href = 'admin.html';
+                    } else {
+                        window.location.href = 'index.html';
+                    }
                 } else {
-                    alert("Lỗi: " + data.message); // Lỗi sai mật khẩu, tài khoản khóa...
+                    alert("Lỗi: " + data.message);
                 }
             } catch (error) {
                 console.error("Lỗi kết nối API:", error);
