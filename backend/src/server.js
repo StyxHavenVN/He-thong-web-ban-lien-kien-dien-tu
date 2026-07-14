@@ -1,78 +1,58 @@
-const express = require("express");
-const cors = require("cors");
-const morgan = require("morgan");
+const express = require('express');
+const cors = require('cors');
+const morgan = require('morgan');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// ================= MIDDLEWARE =================
 app.use(cors());
 app.use(express.json());
-app.use(morgan("dev")); // Tự động in log ra terminal
+app.use(morgan('dev'));
 
-// ================= KẾT NỐI DATABASE POSTGRESQL =================
-const sequelize = require("./data/config/database");
-// Import tất cả model trước khi sync
-require("./modules/auth/user.model");
+const sequelize = require('./data/config/database');
+const User = require('./modules/auth/user.model');
+const Product = require('./modules/product/product.model');
+const bcrypt = require('bcryptjs');
 
-// Đồng bộ các Model (Bảng) vào Database
-sequelize
-  .sync({ alter: true })
-  .then(() => console.log("✅ PostgreSQL Database connected and synchronized."))
-  .catch((err) => console.error("❌ Database connection error:", err));
+// Đồng bộ CSDL
+sequelize.sync({ alter: true })
+    .then(async () => {
+        console.log('✅ PostgreSQL Database connected and synchronized.');
 
-// ================= API ROUTES (MODULAR) =================
-// Import các route từ các module
-const authRoutes = require("./modules/auth/auth.routes");
+        // 1. TẠO TÀI KHOẢN MẪU
+        const adminExists = await User.findOne({ where: { email: 'admin@shop.local' } });
+        if (!adminExists) {
+            const defaultPassword = await bcrypt.hash('123456', 10);
+            await User.bulkCreate([
+                { fullname: "Quản trị viên", email: "admin@shop.local", phone: "0900000001", password: defaultPassword, role: "ADMIN" },
+                { fullname: "Nhân viên kho", email: "staff@shop.local", phone: "0900000002", password: defaultPassword, role: "STAFF" },
+                { fullname: "Khách hàng mẫu", email: "customer@shop.local", phone: "0900000003", password: defaultPassword, role: "CUSTOMER" }
+            ]);
+            console.log('✅ Đã tạo tài khoản mẫu!');
+        }
 
-// Gắn route vào app
-app.use("/api/auth", authRoutes);
+        // 2. TẠO SẢN PHẨM MẪU (FR03)
+        const productCount = await Product.count();
+        if (productCount === 0) {
+            await Product.bulkCreate([
+                { name: "Intel Core i5-12400F", categoryId: "cat-cpu", brand: "Intel", price: 3390000, stock: 12, image: "https://placehold.co/400x250/f0f1f3/555f6e?text=Intel+i5", description: "CPU 6 nhân 12 luồng.", specs: { "socket": "LGA1700", "ramType": "DDR4" }, badge: "MỚI", rating: 4.8, reviews: 32 },
+                { name: "NVIDIA RTX 3060 12GB", categoryId: "cat-vga", brand: "NVIDIA", price: 6990000, oldPrice: 7500000, stock: 4, image: "https://placehold.co/400x250/f0f1f3/555f6e?text=RTX+3060", specs: { "vram": "12GB", "power": 550 }, badge: "-7%", rating: 4.9, reviews: 15 },
+                { name: "ASUS PRIME B660M-K", categoryId: "cat-mainboard", brand: "ASUS", price: 2490000, stock: 6, image: "https://placehold.co/400x250/f0f1f3/555f6e?text=ASUS+B660M", specs: { "socket": "LGA1700", "ramType": "DDR4" }, rating: 4.5, reviews: 22 },
+                { name: "Corsair Vengeance 16GB", categoryId: "cat-ram", brand: "Corsair", price: 990000, stock: 20, image: "https://placehold.co/400x250/f0f1f3/555f6e?text=RAM+16GB", specs: { "type": "DDR4", "bus": 3200 }, badge: "MỚI", rating: 4.7, reviews: 88 },
+                { name: "Samsung 980 1TB NVMe", categoryId: "cat-ssd", brand: "Samsung", price: 1690000, stock: 15, image: "https://placehold.co/400x250/f0f1f3/555f6e?text=SSD+1TB", specs: { "capacity": "1TB", "type": "NVMe" }, rating: 5.0, reviews: 45 }
+            ]);
+            console.log('✅ Đã tạo dữ liệu linh kiện mẫu!');
+        }
+    })
+    .catch(err => console.error('❌ DB connection error:', err));
 
-// Dữ liệu sản phẩm giả lập tạm thời (Chờ bạn làm FR03 - Module Product)
-const tempProducts = [
-  {
-    id: 1,
-    name: "ASUS TUF Gaming GeForce RTX 4060 Ti",
-    price: 11990000,
-    oldPrice: null,
-    rating: 4.5,
-    reviews: 32,
-    badge: "MỚI",
-  },
-  {
-    id: 2,
-    name: "MSI GeForce RTX 4070 Ventus 3X",
-    price: 17990000,
-    oldPrice: 19490000,
-    rating: 4.0,
-    reviews: 28,
-    badge: "-8%",
-  },
-  {
-    id: 3,
-    name: "Gigabyte GeForce RTX 4060 EAGLE OC",
-    price: 9490000,
-    oldPrice: null,
-    rating: 4.0,
-    reviews: 15,
-    badge: "MỚI",
-  },
-  {
-    id: 4,
-    name: "ASUS ROG Strix GeForce RTX 4080",
-    price: 32990000,
-    oldPrice: 34990000,
-    rating: 5.0,
-    reviews: 18,
-    badge: "-5%",
-  },
-];
+// ================= API ROUTES =================
+const authRoutes = require('./modules/auth/auth.routes');
+const productRoutes = require('./modules/product/product.routes');
 
-app.get("/api/products", (req, res) => {
-  res.json({ success: true, data: tempProducts });
-});
+app.use('/api/auth', authRoutes);
+app.use('/api/products', productRoutes);
 
-// ================= START SERVER =================
 app.listen(PORT, () => {
-  console.log(`🚀 Backend server is running on port ${PORT}`);
+    console.log(`🚀 Backend server is running on port ${PORT}`);
 });
