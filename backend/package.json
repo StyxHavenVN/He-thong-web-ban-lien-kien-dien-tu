@@ -25,6 +25,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.61.1",
     "eslint": "^10.7.0",
     "jest": "^30.4.2",
     "nodemon": "^3.1.0",

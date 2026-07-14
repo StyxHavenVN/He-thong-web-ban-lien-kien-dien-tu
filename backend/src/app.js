@@ -47,6 +47,10 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/admin', adminRoutes);
 
+// Phục vụ giao diện frontend tĩnh
+const path = require('path');
+app.use(express.static(path.join(__dirname, '../../frontend')));
+
 // Xử lý Route 404 (Không tồn tại)
 app.use((req, res, next) => {
   res.status(404).json({ message: 'Không tìm thấy trang yêu cầu.' });
