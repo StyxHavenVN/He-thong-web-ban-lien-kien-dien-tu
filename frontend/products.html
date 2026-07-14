@@ -74,62 +74,71 @@
     <div class="main-layout" style="grid-template-columns: 260px 1fr; gap: 24px; margin-top: 0; margin-bottom: 60px;">
       
       <div class="left-sidebar-wrapper" style="display: flex; flex-direction: column; gap: 20px;">
-        <aside class="sidebar-menu" style="position: static; box-shadow: var(--shadow-xs);">
-          <div class="sidebar-title">☰ DANH MỤC SẢN PHẨM</div>
-<ul class="menu-list">
-            <li>
-                <a href="products.html" data-cat="all" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;">
-                    <div class="menu-left"><span class="icon"></span> Tất cả sản phẩm</div><span class="menu-arrow">›</span>
-                </a>
-            </li>
-            <li>
-                <a href="products.html?category=cat-cpu" data-cat="cat-cpu" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;">
-                    <div class="menu-left"><span class="icon"></span> CPU - Bộ vi xử lý</div><span class="menu-arrow">›</span>
-                </a>
-            </li>
-            <li>
-                <a href="products.html?category=cat-mainboard" data-cat="cat-mainboard" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;">
-                    <div class="menu-left"><span class="icon"></span> Mainboard - Bo mạch chủ</div><span class="menu-arrow">›</span>
-                </a>
-            </li>
-            <li>
-                <a href="products.html?category=cat-vga" data-cat="cat-vga" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;">
-                    <div class="menu-left"><span class="icon"></span> VGA - Card màn hình</div><span class="menu-arrow">›</span>
-                </a>
-            </li>
-            <li>
-                <a href="products.html?category=cat-ram" data-cat="cat-ram" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;">
-                    <div class="menu-left"><span class="icon"></span> RAM - Bộ nhớ</div><span class="menu-arrow">›</span>
-                </a>
-            </li>
-            <li>
-                <a href="products.html?category=cat-ssd" data-cat="cat-ssd" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;">
-                    <div class="menu-left"><span class="icon"></span> Ổ cứng - SSD</div><span class="menu-arrow">›</span>
-                </a>
-            </li>
-            <li>
-                <a href="products.html?category=cat-psu" data-cat="cat-psu" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;">
-                    <div class="menu-left"><span class="icon"></span> Nguồn - PSU</div><span class="menu-arrow">›</span>
-                </a>
-            </li>
-            <li>
-                <a href="products.html?category=cat-case" data-cat="cat-case" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;">
-                    <div class="menu-left"><span class="icon"></span> Vỏ case</div><span class="menu-arrow">›</span>
-                </a>
-            </li>
-            <li>
-                <a href="products.html?category=cat-cooler" data-cat="cat-cooler" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;">
-                    <div class="menu-left"><span class="icon"></span> Tản nhiệt</div><span class="menu-arrow">›</span>
-                </a>
-            </li>
-          </ul>
+        <aside class="filter-sidebar" style="position: static; box-shadow: var(--shadow-xs); width: 100%;">
+          <!-- Khối danh mục -->
+          <div class="filter-block">
+            <div class="filter-title">Danh mục</div>
+            <ul class="filter-list" id="category-filter-list">
+              <li class="active"><a href="#" data-category="all"><span class="cat-name">Tất cả sản phẩm</span></a></li>
+              <li><a href="#" data-category="cat-cpu"><span class="cat-name">CPU - Bộ vi xử lý</span></a></li>
+              <li><a href="#" data-category="cat-mainboard"><span class="cat-name">Mainboard - Bo mạch chủ</span></a></li>
+              <li><a href="#" data-category="cat-vga"><span class="cat-name">VGA - Card màn hình</span></a></li>
+              <li><a href="#" data-category="cat-ram"><span class="cat-name">RAM - Bộ nhớ</span></a></li>
+              <li><a href="#" data-category="cat-ssd"><span class="cat-name">Ổ cứng - SSD</span></a></li>
+              <li><a href="#" data-category="cat-psu"><span class="cat-name">Nguồn - PSU</span></a></li>
+              <li><a href="#" data-category="cat-case"><span class="cat-name">Vỏ case</span></a></li>
+              <li><a href="#" data-category="cat-cooler"><span class="cat-name">Tản nhiệt</span></a></li>
+            </ul>
+          </div>
+
+          <!-- Khối hãng sản xuất -->
+          <div class="filter-block">
+            <div class="filter-title">Hãng sản xuất</div>
+            <div id="brand-filter-list">
+              <label class="custom-checkbox">Intel
+                <input type="checkbox" name="brand" value="Intel">
+                <span class="checkmark"></span>
+              </label>
+              <label class="custom-checkbox">AMD
+                <input type="checkbox" name="brand" value="AMD">
+                <span class="checkmark"></span>
+              </label>
+              <label class="custom-checkbox">NVIDIA
+                <input type="checkbox" name="brand" value="NVIDIA">
+                <span class="checkmark"></span>
+              </label>
+              <label class="custom-checkbox">Asus
+                <input type="checkbox" name="brand" value="Asus">
+                <span class="checkmark"></span>
+              </label>
+              <label class="custom-checkbox">Gigabyte
+                <input type="checkbox" name="brand" value="Gigabyte">
+                <span class="checkmark"></span>
+              </label>
+              <label class="custom-checkbox">MSI
+                <input type="checkbox" name="brand" value="MSI">
+                <span class="checkmark"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Khối lọc theo giá -->
+          <div class="filter-block price-range">
+            <div class="filter-title">Khoảng giá (đ)</div>
+            <div class="range-inputs">
+              <input type="number" id="price-min" placeholder="Từ" min="0">
+              <span>-</span>
+              <input type="number" id="price-max" placeholder="Đến" min="0">
+            </div>
+            <button id="btn-apply-price" class="btn-cart-solid" style="width: 100%; margin-top: 12px; height: 34px; font-size: 13px;">Áp dụng</button>
+          </div>
         </aside>
       </div>
 
       <main class="category-main">
         <div class="category-toolbar">
           <div class="toolbar-left">
-            <h1>Card màn hình</h1>
+            <h1>Danh sách sản phẩm</h1>
             <span class="product-count" id="total-product-count">Đang tải dữ liệu...</span>
           </div>
           <div class="toolbar-right">
@@ -148,6 +157,7 @@
           </div>
         </div>
         <div class="catalog-grid" id="product-list-container"></div>
+        <div id="pagination-container" style="display: flex; justify-content: center; gap: 8px; margin-top: 32px; align-items: center;"></div>
       </main>
 
     </div>

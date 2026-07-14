@@ -18,6 +18,7 @@ module.exports = {
         badge: 'HOT',
         rating: 4.8,
         reviews: 124,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -35,6 +36,7 @@ module.exports = {
         badge: 'MỚI',
         rating: 5.0,
         reviews: 42,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -50,6 +52,7 @@ module.exports = {
         specs: JSON.stringify({ socket: 'AM4' }),
         rating: 4.9,
         reviews: 88,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -66,6 +69,7 @@ module.exports = {
         badge: 'MỚI',
         rating: 4.9,
         reviews: 56,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -85,6 +89,7 @@ module.exports = {
         badge: '-7%',
         rating: 4.9,
         reviews: 215,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -101,6 +106,7 @@ module.exports = {
         badge: 'MỚI',
         rating: 5.0,
         reviews: 12,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -118,6 +124,7 @@ module.exports = {
         badge: '-4%',
         rating: 4.8,
         reviews: 34,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -134,6 +141,7 @@ module.exports = {
         badge: 'VIP',
         rating: 5.0,
         reviews: 8,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -152,6 +160,7 @@ module.exports = {
         badge: '',
         rating: 4.5,
         reviews: 67,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -169,6 +178,7 @@ module.exports = {
         badge: 'HOT',
         rating: 4.8,
         reviews: 43,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -185,6 +195,7 @@ module.exports = {
         badge: '',
         rating: 4.7,
         reviews: 29,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -203,6 +214,7 @@ module.exports = {
         badge: 'SALE',
         rating: 4.9,
         reviews: 312,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -219,6 +231,7 @@ module.exports = {
         badge: 'HOT',
         rating: 5.0,
         reviews: 85,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -235,6 +248,7 @@ module.exports = {
         badge: '',
         rating: 4.7,
         reviews: 142,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -253,6 +267,7 @@ module.exports = {
         badge: '',
         rating: 5.0,
         reviews: 405,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -270,6 +285,7 @@ module.exports = {
         badge: '-10%',
         rating: 4.9,
         reviews: 67,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -286,6 +302,7 @@ module.exports = {
         badge: '',
         rating: 4.6,
         reviews: 210,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -304,6 +321,7 @@ module.exports = {
         badge: '',
         rating: 4.7,
         reviews: 93,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -320,6 +338,7 @@ module.exports = {
         badge: 'HOT',
         rating: 4.9,
         reviews: 54,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -338,6 +357,7 @@ module.exports = {
         badge: '',
         rating: 4.8,
         reviews: 76,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -355,6 +375,7 @@ module.exports = {
         badge: '-8%',
         rating: 4.9,
         reviews: 122,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -373,6 +394,7 @@ module.exports = {
         badge: 'MỚI',
         rating: 4.8,
         reviews: 34,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -389,6 +411,7 @@ module.exports = {
         badge: '',
         rating: 5.0,
         reviews: 19,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -407,6 +430,7 @@ module.exports = {
         badge: '',
         rating: 5.0,
         reviews: 0,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -423,6 +447,7 @@ module.exports = {
         badge: '',
         rating: 5.0,
         reviews: 0,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -439,6 +464,7 @@ module.exports = {
         badge: '',
         rating: 5.0,
         reviews: 0,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       },
@@ -455,6 +481,7 @@ module.exports = {
         badge: '',
         rating: 5.0,
         reviews: 0,
+        active: true,
         createdAt: new Date(),
         updatedAt: new Date()
       }
