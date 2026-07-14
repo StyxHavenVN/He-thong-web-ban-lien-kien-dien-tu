@@ -1,4 +1,237 @@
-<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Giỏ hàng</title><link rel="stylesheet" href="assets/css/styles.css"></head>
-<body><header class="header"><div class="logo">Linh Kiện Shop</div><nav id="nav" class="nav"></nav></header>
-<main class="container"><h1>Giỏ hàng</h1><div id="notice" class="notice"></div><div class="layout-2"><section class="table-wrap"><table><thead><tr><th>Sản phẩm</th><th>Số lượng</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead><tbody id="cartItems"></tbody></table></section><aside class="card"><div class="card-body"><h2>Thanh toán</h2><p>Tổng tiền: <b id="total">0đ</b></p><div class="form-row"><label>Địa chỉ giao hàng</label><textarea id="shippingAddress" rows="3"></textarea></div><div class="form-row"><label>Phương thức thanh toán</label><select id="paymentMethod"><option value="COD">Thanh toán khi nhận hàng</option><option value="ONLINE">Thanh toán trực tuyến</option></select></div><button onclick="checkout()">Đặt hàng</button></div></aside></div></main>
-<script src="assets/js/api.js"></script><script src="assets/js/cart.js"></script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Giỏ hàng | BlueTech PC Store</title>
+
+  <link rel="stylesheet" href="assets/css/styles.css" />
+  <link rel="stylesheet" href="assets/css/header.css" />
+  <link rel="stylesheet" href="assets/css/navbar.css" />
+  <link rel="stylesheet" href="assets/css/products.css" /> 
+  <link rel="stylesheet" href="assets/css/cart.css?v=3" />
+  <link rel="stylesheet" href="assets/css/responsive.css" />
+
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css" />
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css" />
+</head>
+
+<body>
+  <div class="top-bar">
+    <div class="container top-bar-container">
+      <div class="top-bar-left">
+        <span><i class="fi fi-sr-truck-side"></i> Miễn phí giao hàng toàn quốc</span>
+        <span><i class="fi fi-sr-time-past"></i> Hoàn trả trong 7 ngày</span>
+      </div>
+      <div class="top-bar-center">
+        <span><i class="fi fi-sr-computer"></i> Build PC dễ dàng - Trả góp 0%</span>
+      </div>
+      <div class="top-bar-right">
+        <span><i class="fi fi-sr-marker"></i> Hệ thống showroom</span>
+        <span><i class="fi fi-sr-document-signed"></i> Kiểm tra đơn hàng</span>
+        <span><i class="fi fi-sr-headset"></i> Hỗ trợ</span>
+      </div>
+    </div>
+  </div>
+
+  <header class="main-header">
+    <div class="container header-container">
+      <a href="index.html" class="logo"><img src="assets/logo/logo_ver2.png" alt="BlueTech Logo" /></a>
+      <form class="search-bar" action="products.html" method="GET">
+        <input type="text" name="keyword" id="search-input" placeholder="Bạn cần tìm gì?" />
+        <button type="submit" id="search-btn" class="search-btn"><i class="fi fi-br-search"></i></button>
+      </form>
+      <div class="header-actions">
+        <div class="action-item"><span class="action-icon"><i class="fi fi-sr-phone-call"></i></span><div class="action-text"><span class="action-label">Hotline</span><span class="action-value">1900.1234</span></div></div>
+        <div class="action-item"><span class="action-icon"><i class="fi fi-sr-marker"></i></span><div class="action-text"><span class="action-label">Hệ thống</span><span class="action-value">Showroom</span></div></div>
+        <div class="action-item"><span class="action-icon"><i class="fi fi-sr-user"></i></span><div class="action-text" id="user-auth-area"><a href="login.html" class="action-label" style="text-decoration: none; color: inherit;">Đăng nhập</a><a href="register.html" class="action-value" style="text-decoration: none; color: inherit;">Đăng ký</a></div></div>
+        
+        <a href="cart.html" class="action-item cart-btn" style="text-decoration: none; cursor: pointer; display: flex; align-items: center;">
+          <span class="action-icon" style="color: white; display: flex; align-items: center;">
+            <i class="fi fi-rr-shopping-cart" style="font-size: 18px;"></i>
+          </span>
+          <span class="header-cart-count" style="background: white; color: var(--blue-600, #0b5edd); font-size: 13px; font-weight: 900; padding: 2px 7px; border-radius: 12px; margin: 0 8px;">0</span>
+          <div class="action-text" style="display: flex; align-items: center;">
+            <span class="action-label" style="font-size: 13px; font-weight: 700; color: white;">Giỏ hàng</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </header>
+
+  <nav class="main-nav">
+    <div class="container nav-container">
+      <a href="#" class="nav-item" style="text-decoration: none; color: white;"><i class="fi fi-sr-settings"></i> Build PC</a>
+      <a href="#" class="nav-item" style="text-decoration: none; color: white;"><i class="fi fi-sr-star"></i> Khuyến mãi</a>
+      <a href="products.html?category=cat-laptop" class="nav-item" style="text-decoration: none; color: white;"><i class="fi fi-sr-laptop"></i> Laptop</a>
+      <a href="products.html" class="nav-item" style="text-decoration: none; color: white;"><i class="fi fi-sr-box-alt"></i> PC - Linh kiện</a>
+      <a href="#" class="nav-item" style="text-decoration: none; color: white;"><i class="fi fi-sr-headphones"></i> Phụ kiện</a>
+      <a href="products.html?category=cat-monitor" class="nav-item" style="text-decoration: none; color: white;"><i class="fi fi-sr-screen"></i> Màn hình</a>
+      <a href="#" class="nav-item" style="text-decoration: none; color: white;"><i class="fi fi-sr-mouse"></i> Thiết bị ngoại vi</a>
+      <a href="#" class="nav-item" style="text-decoration: none; color: white;"><i class="fi fi-sr-document"></i> Tin tức</a>
+      <a href="#" class="nav-item" style="text-decoration: none; color: white;"><i class="fi fi-sr-headset"></i> Hỗ trợ</a>
+    </div>
+  </nav>
+
+  <main class="cart-page container">
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <a href="index.html">Trang chủ</a> > <strong style="color: var(--gray-900);">Giỏ hàng</strong>
+    </nav>
+
+    <div id="cart-content-wrapper">
+      <div class="cart-heading-title">
+        <h1>Giỏ hàng</h1><span id="cart-count-title">(0 sản phẩm)</span>
+      </div>
+
+      <section class="cart-layout">
+        <div class="cart-left">
+          
+          <div class="cart-products-card">
+            <div class="cart-table-header">
+              <span>Sản phẩm</span>
+              <span class="text-center">Đơn giá</span>
+              <span class="text-center">Số lượng</span>
+              <span class="text-right">Thành tiền</span>
+              <span class="text-center">Thao tác</span>
+            </div>
+
+            <div class="cart-list" id="cart-list"></div>
+
+            <div class="cart-list-footer">
+              <a href="products.html" class="btn-continue-shopping"><i class="fi fi-rr-arrow-left"></i> Tiếp tục mua hàng</a>
+              <button type="button" class="btn-clear-cart" id="btn-clear-cart"><i class="fi fi-rr-trash"></i> Xóa giỏ hàng</button>
+            </div>
+          </div>
+
+          <section class="cart-benefits-row">
+            <div class="benefit-item"><i class="fi fi-sr-truck-side"></i><div><strong>Miễn phí giao hàng</strong><span>Toàn quốc</span></div></div>
+            <div class="benefit-item"><i class="fi fi-sr-refresh"></i><div><strong>Đổi trả dễ dàng</strong><span>Trong 7 ngày</span></div></div>
+            <div class="benefit-item"><i class="fi fi-sr-shield-check"></i><div><strong>Sản phẩm chính hãng</strong><span>100% chính hãng</span></div></div>
+            <div class="benefit-item"><i class="fi fi-sr-headset"></i><div><strong>Hỗ trợ tận tâm</strong><span>1900 1234</span></div></div>
+          </section>
+
+          <div class="related-products-section">
+            <h3>Có thể bạn cũng quan tâm</h3>
+            <div class="related-grid">
+              
+              <div class="related-card">
+                  <div class="related-badge">-8%</div>
+                  <img src="https://placehold.co/400x250/f4f4f5/555555?text=RTX+4080+SUPRIM" alt="VGA">
+                  <h4>MSI GeForce RTX 4080 SUPRIM X 16GB GDDR6X</h4>
+                  <div class="price-row">
+                      <div>
+                          <span class="current">34.990.000 ₫</span>
+                          <span class="old">37.990.000 ₫</span>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="related-card">
+                  <div class="related-badge">-7%</div>
+                  <img src="https://placehold.co/400x250/f4f4f5/555555?text=AORUS+RTX+4080" alt="VGA">
+                  <h4>Gigabyte AORUS GeForce RTX 4080 16GB MASTER</h4>
+                  <div class="price-row">
+                      <div>
+                          <span class="current">33.490.000 ₫</span>
+                          <span class="old">35.990.000 ₫</span>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="related-card">
+                  <div class="related-badge">-9%</div>
+                  <img src="https://placehold.co/400x250/f4f4f5/555555?text=ROG+Strix+4080" alt="VGA">
+                  <h4>ASUS ROG Strix GeForce RTX 4080 16GB OC</h4>
+                  <div class="price-row">
+                      <div>
+                          <span class="current">35.490.000 ₫</span>
+                          <span class="old">38.990.000 ₫</span>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="related-card">
+                  <div class="related-badge">-7%</div>
+                  <img src="https://placehold.co/400x250/f4f4f5/555555?text=ZOTAC+4080" alt="VGA">
+                  <h4>ZOTAC Gaming GeForce RTX 4080 Trinity OC</h4>
+                  <div class="price-row">
+                      <div>
+                          <span class="current">32.990.000 ₫</span>
+                          <span class="old">35.490.000 ₫</span>
+                      </div>
+                  </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <aside class="cart-right">
+          <div class="summary-card">
+            <h2>Thông tin đơn hàng</h2>
+            
+            <div class="summary-row">
+              <span id="summary-qty-text">Tạm tính (0 sản phẩm)</span>
+              <strong id="subtotal">0 ₫</strong>
+            </div>
+            <div class="summary-row">
+              <span>Phí vận chuyển <i class="fi fi-rr-info" style="font-size: 11px; cursor: pointer;"></i></span>
+              <strong class="text-green">Miễn phí</strong>
+            </div>
+            <div class="summary-row">
+              <span>Ưu đãi</span>
+              <strong class="text-red">- 0 ₫</strong>
+            </div>
+            
+            <div class="summary-divider"></div>
+            
+            <div class="summary-total">
+              <span>Tổng cộng</span>
+              <div class="total-right">
+                <strong class="total-price" id="grand-total">0 ₫</strong>
+                <small>(Đã bao gồm VAT)</small>
+              </div>
+            </div>
+
+            <button class="btn-checkout-primary"><i class="fi fi-sr-lock"></i> TIẾN HÀNH THANH TOÁN</button>
+            <button class="btn-checkout-outline"><i class="fi fi-sr-credit-card"></i> THANH TOÁN TRẢ GÓP</button>
+          </div>
+
+          <div class="summary-card coupon-card">
+            <h3>Bạn có mã giảm giá?</h3>
+            <div class="coupon-form">
+              <input type="text" placeholder="Nhập mã giảm giá" />
+              <button type="button">Áp dụng</button>
+            </div>
+            <div class="security-note">
+              <i class="fi fi-rr-shield-check"></i> Thông tin thanh toán được bảo mật tuyệt đối
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <section class="bottom-benefits">
+          <div class="bottom-benefit-item"><i class="fi fi-sr-shield-check"></i><div><strong>100% Chính hãng</strong><span>Cam kết hàng chính hãng</span></div></div>
+          <div class="bottom-benefit-item"><i class="fi fi-sr-badge-check"></i><div><strong>Bảo hành uy tín</strong><span>Bảo hành chính hãng</span></div></div>
+          <div class="bottom-benefit-item"><i class="fi fi-sr-truck-side"></i><div><strong>Giao hàng nhanh</strong><span>Giao hàng toàn quốc</span></div></div>
+          <div class="bottom-benefit-item"><i class="fi fi-sr-credit-card"></i><div><strong>Thanh toán đa dạng</strong><span>Nhiều hình thức thanh toán</span></div></div>
+          <div class="bottom-benefit-item"><i class="fi fi-sr-headset"></i><div><strong>Hỗ trợ 24/7</strong><span>Hỗ trợ mọi lúc, mọi nơi</span></div></div>
+      </section>
+
+    </div>
+
+    <section class="empty-cart" id="empty-cart-message" style="display: none;">
+      <div class="empty-cart-icon"><i class="fi fi-rr-shopping-cart"></i></div>
+      <h2>Giỏ hàng của bạn đang trống</h2>
+      <p>Hãy khám phá các sản phẩm công nghệ nổi bật tại BlueTech.</p>
+      <a href="products.html" class="empty-cart-btn">Tiếp tục mua sắm</a>
+    </section>
+
+  </main>
+
+  <script src="assets/js/auth.js"></script>
+  <script src="assets/js/cart.js?v=7"></script>
+</body>
+</html>

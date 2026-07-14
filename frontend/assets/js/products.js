@@ -10,6 +10,16 @@ document.addEventListener('DOMContentLoaded', function() {
         sort: 'newest'
     };
 
+    // ==================================================
+    // Cập nhật số lượng giỏ hàng trên Header khi load trang
+    // ==================================================
+    const updateHeaderCartCount = () => {
+        const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        document.querySelectorAll('.header-cart-count').forEach(el => el.innerText = totalItems);
+    };
+    updateHeaderCartCount(); // Gọi ngay lần đầu mở trang
+
     const fetchAndRenderProducts = async () => {
         try {
             productContainer.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 40px; font-weight: bold; color: var(--blue-600);">Đang tải dữ liệu...</p>';
@@ -56,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <div class="catalog-title">${product.name}</div>
                             <div class="catalog-rating">
                                 <i class="fi fi-sr-star"></i><i class="fi fi-sr-star"></i><i class="fi fi-sr-star"></i><i class="fi fi-sr-star"></i><i class="fi fi-sr-star"></i>
-                                <span>(${product.reviews})</span>
+                                <span>(${product.reviews || 0})</span>
                             </div>
                             <div class="catalog-price">${priceHTML}</div>
                             <div class="catalog-actions">
@@ -67,6 +77,45 @@ document.addEventListener('DOMContentLoaded', function() {
                     `;
                     productContainer.innerHTML += cardHTML;
                 });
+
+                // ==================================================
+                // LOGIC XỬ LÝ THÊM VÀO GIỎ HÀNG
+                // ==================================================
+                const attachCartEvent = (buttonClass) => {
+                    document.querySelectorAll(buttonClass).forEach((btn, index) => {
+                        btn.addEventListener('click', () => {
+                            const product = products[index]; // Lấy đúng sản phẩm tại vị trí click
+                            
+                            let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+                            
+                            // Kiểm tra xem sản phẩm đã có trong giỏ chưa (Dựa vào ID hoặc Tên)
+                            const existingItem = cart.find(item => (item.id && item.id === product.id) || item.name === product.name);
+                            
+                            if (existingItem) {
+                                existingItem.quantity += 1; // Nếu có rồi thì tăng số lượng
+                            } else {
+                                cart.push({ // Nếu chưa có thì tạo mới
+                                    id: product.id || new Date().getTime(),
+                                    name: product.name,
+                                    image: product.image,
+                                    price: product.price,
+                                    quantity: 1
+                                });
+                            }
+                            
+                            // Lưu vào trình duyệt và thông báo
+                            localStorage.setItem('cartItems', JSON.stringify(cart));
+                            alert(`Đã thêm "${product.name}" vào giỏ hàng!`);
+                            
+                            // Cập nhật lại con số màu đỏ trên Header
+                            updateHeaderCartCount();
+                        });
+                    });
+                };
+
+                // Kích hoạt sự kiện cho cả 2 loại nút trên thẻ sản phẩm
+                attachCartEvent('.btn-cart-solid');
+                attachCartEvent('.btn-cart-outline');
             }
         } catch (error) {
             productContainer.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">Lỗi tải dữ liệu sản phẩm.</p>';

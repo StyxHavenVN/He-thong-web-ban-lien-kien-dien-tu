@@ -136,3 +136,19 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+document.addEventListener('DOMContentLoaded', () => {
+    const updateGlobalCartCount = () => {
+        // Lấy giỏ hàng từ bộ nhớ máy
+        const cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        // Tính tổng số lượng
+        const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+        
+        // Cập nhật lên tất cả các bóng đỏ trên Header
+        document.querySelectorAll('.header-cart-count').forEach(el => {
+            el.innerText = totalItems;
+        });
+    };
+    
+    // Chạy ngay khi vừa mở trang
+    updateGlobalCartCount();
+});

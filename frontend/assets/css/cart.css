@@ -1,0 +1,118 @@
+/* ================= TRANG GIỎ HÀNG CHUẨN ================= */
+.cart-page { padding: 10px 0 20px; }
+.cart-heading-title { margin-bottom: 24px; }
+.cart-heading-title h1 { color: var(--gray-900); font-size: 26px; font-weight: 800; display: inline-block;}
+.cart-heading-title span { color: var(--gray-500); font-size: 18px; font-weight: 600; margin-left: 8px;}
+
+.cart-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 24px; align-items: start; }
+.cart-products-card { background: var(--white); border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); border: 1px solid var(--gray-200); overflow: hidden; margin-bottom: 24px;}
+
+/* Lưới Bảng sản phẩm - CHỈNH LẠI ĐỂ KHÔNG BỊ DÍNH CHỮ */
+.cart-table-header, .cart-item { 
+    display: grid; 
+    grid-template-columns: minmax(220px, 1fr) 110px 120px 120px 50px; 
+    gap: 15px; 
+    align-items: center; 
+}
+.cart-table-header { padding: 16px 20px; border-bottom: 1px solid var(--gray-200); background: #fdfdfd; color: var(--gray-900); font-weight: 700; font-size: 14px; }
+.cart-item { padding: 20px; border-bottom: 1px solid var(--gray-100); }
+.cart-item:last-child { border-bottom: none; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+
+/* Hình ảnh và chi tiết sản phẩm */
+.cart-product { display: flex; align-items: flex-start; gap: 16px; }
+.product-image { 
+    width: 80px; height: 80px; flex-shrink: 0;
+    border-radius: 8px; border: 1px solid var(--gray-200); 
+    object-fit: contain; padding: 4px; background: white;
+}
+.product-info h3 { font-size: 14px; color: var(--gray-900); line-height: 1.4; margin-bottom: 6px; }
+.product-info p { font-size: 12px; color: var(--gray-500); margin-bottom: 4px; }
+.stock-status { color: #10B981; font-size: 12px; font-weight: 600; display: flex; align-items: center; gap: 4px; }
+
+.unit-price { color: var(--blue-600); font-weight: 700; font-size: 14px; }
+.item-total { color: var(--blue-600); font-weight: 700; font-size: 14px; }
+
+/* Nút Tăng giảm số lượng */
+.quantity-control { display: flex; align-items: center; justify-content: center; width: 100px; height: 36px; border: 1px solid var(--gray-200); border-radius: 4px; margin: 0 auto; overflow: hidden;}
+.quantity-btn { width: 32px; height: 100%; background: var(--white); border: none; font-size: 16px; color: var(--gray-600); cursor: pointer; }
+.quantity-btn:hover { background: var(--gray-100); }
+.quantity-input { width: 36px; height: 100%; border: none; border-left: 1px solid var(--gray-200); border-right: 1px solid var(--gray-200); text-align: center; font-weight: 600; outline: none; }
+
+.remove-item { background: transparent; border: none; color: var(--gray-400); font-size: 18px; cursor: pointer; padding: 8px; margin: 0 auto; display: block; transition: 0.2s;}
+.remove-item:hover { color: #EF4444; }
+
+/* Footer List */
+.cart-list-footer { display: flex; justify-content: space-between; padding: 16px 20px; background: #fdfdfd; border-top: 1px solid var(--gray-200);}
+.btn-continue-shopping { display: flex; align-items: center; gap: 8px; color: var(--gray-700); text-decoration: none; font-weight: 600; font-size: 14px;}
+.btn-continue-shopping:hover { color: var(--blue-600);}
+.btn-clear-cart { display: flex; align-items: center; gap: 8px; border: none; background: transparent; color: var(--gray-500); font-weight: 600; cursor: pointer; font-size: 14px; }
+.btn-clear-cart:hover { color: #EF4444; }
+
+/* Thanh Benefits Dưới Giỏ Hàng */
+.cart-benefits-row { display: flex; align-items: center; justify-content: space-between; background: var(--white); border: 1px solid var(--gray-200); border-radius: 8px; padding: 20px 10px; margin-bottom: 32px; }
+.cart-benefits-row .benefit-item { display: flex; align-items: center; justify-content: center; gap: 12px; flex: 1; border-right: 1px solid var(--gray-200); }
+.cart-benefits-row .benefit-item:last-child { border-right: none; }
+.cart-benefits-row .benefit-item i { font-size: 26px; color: var(--blue-600); }
+.cart-benefits-row .benefit-item div { display: flex; flex-direction: column; }
+.cart-benefits-row .benefit-item strong { font-size: 13px; color: var(--gray-900); }
+.cart-benefits-row .benefit-item span { font-size: 12px; color: var(--gray-500); margin-top: 2px;}
+
+/* Lưới Sản phẩm liên quan (Có thể bạn cũng quan tâm) */
+.related-products-section { margin-top: 10px; margin-bottom: 40px;}
+.related-products-section h3 { font-size: 18px; color: var(--gray-900); margin-bottom: 16px; font-weight: 800; }
+.related-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+.related-card { background: white; border: 1px solid var(--gray-200); border-radius: 8px; padding: 16px; display: flex; flex-direction: column; position: relative; transition: 0.2s;}
+.related-card:hover { border-color: var(--blue-500); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+.related-badge { position: absolute; top: 12px; left: 12px; background: #EF4444; color: white; padding: 2px 6px; border-radius: 4px; font-size: 11px; font-weight: 700; z-index: 1;}
+.related-card img { width: 100%; height: 120px; object-fit: contain; margin-bottom: 16px; }
+.related-card h4 { font-size: 13px; color: var(--gray-900); font-weight: 600; line-height: 1.4; margin-bottom: 8px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.related-card .price-row { display: flex; align-items: center; justify-content: space-between; margin-top: auto; }
+.related-card .price-row .current { color: var(--blue-600); font-weight: 700; font-size: 15px; }
+.related-card .price-row .old { color: var(--gray-400); font-size: 12px; text-decoration: line-through; margin-left: 8px; }
+.related-card .price-row .discount { color: #EF4444; font-size: 12px; font-weight: 600; margin-left: auto; }
+
+/* ================= CỘT PHẢI (SUMMARY) ================= */
+.summary-card { background: var(--white); border-radius: 8px; padding: 20px; border: 1px solid var(--gray-200); margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);}
+.summary-card h2 { font-size: 16px; color: var(--gray-900); font-weight: 800; margin-bottom: 20px; }
+.summary-card h3 { font-size: 14px; color: var(--gray-900); font-weight: 700; margin-bottom: 16px; }
+.summary-row { display: flex; justify-content: space-between; margin-bottom: 14px; font-size: 13px; color: var(--gray-600); }
+.summary-row strong { color: var(--gray-900); font-size: 14px;}
+.text-green { color: #10B981 !important; }
+.text-red { color: #EF4444 !important; }
+.summary-divider { height: 1px; background: var(--gray-200); margin: 16px 0; }
+
+.summary-total { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 24px; }
+.summary-total > span { font-size: 15px; font-weight: 700; color: var(--gray-900); }
+.total-right { text-align: right; display: flex; flex-direction: column; }
+.total-price { font-size: 22px; font-weight: 800; color: var(--blue-600); line-height: 1.2; }
+.total-right small { font-size: 11px; color: var(--gray-500); margin-top: 4px; }
+
+.btn-checkout-primary { width: 100%; background: var(--blue-600); color: white; border: none; padding: 14px; border-radius: 6px; font-weight: 700; font-size: 14px; margin-bottom: 12px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.2s;}
+.btn-checkout-outline { width: 100%; background: white; color: var(--blue-600); border: 1px solid var(--blue-600); padding: 14px; border-radius: 6px; font-weight: 700; font-size: 14px; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 8px; transition: 0.2s;}
+.btn-checkout-primary:hover { background: var(--blue-700); }
+.btn-checkout-outline:hover { background: var(--blue-50); }
+
+/* Mã giảm giá */
+.coupon-form { display: flex; gap: 8px; margin-bottom: 16px; }
+.coupon-form input { flex: 1; padding: 10px 12px; border: 1px solid var(--gray-200); border-radius: 6px; outline: none; font-size: 13px;}
+.coupon-form input:focus { border-color: var(--blue-500); }
+.coupon-form button { padding: 0 16px; background: #f4f4f5; border: 1px solid var(--gray-200); border-radius: 6px; font-weight: 600; color: var(--gray-700); cursor: pointer; font-size: 13px;}
+.coupon-form button:hover { background: #e4e4e7;}
+.security-note { display: flex; justify-content: center; align-items: center; gap: 6px; color: var(--gray-500); font-size: 11px; }
+
+/* Thanh quyền lợi dưới cùng */
+.bottom-benefits { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; padding: 30px 0; border-top: 1px solid var(--gray-200); margin-top: 20px; }
+.bottom-benefit-item { display: flex; align-items: center; gap: 12px; justify-content: center; }
+.bottom-benefit-item i { font-size: 26px; color: var(--blue-600); }
+.bottom-benefit-item div { display: flex; flex-direction: column; }
+.bottom-benefit-item strong { font-size: 13px; color: var(--gray-900); }
+.bottom-benefit-item span { font-size: 12px; color: var(--gray-500); margin-top: 2px; }
+
+/* Empty Cart */
+.empty-cart { padding: 60px 20px; text-align: center; background: white; border-radius: 8px; border: 1px solid var(--gray-200); }
+.empty-cart-icon { font-size: 60px; color: var(--blue-600); margin-bottom: 16px; }
+.empty-cart h2 { font-size: 20px; color: var(--gray-900); margin-bottom: 8px; }
+.empty-cart p { color: var(--gray-500); margin-bottom: 24px; font-size: 14px; }
+.empty-cart-btn { display: inline-block; background: var(--blue-600); color: white; padding: 12px 24px; border-radius: 6px; text-decoration: none; font-weight: 600; }
