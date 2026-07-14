@@ -1,4 +1,4 @@
-const API_BASE = '';
+const API_BASE = window.location.origin.includes('localhost') || window.location.origin.includes('127.0.0.1') ? 'http://localhost:3000' : '';
 
 function formatMoney(value) {
   return Number(value || 0).toLocaleString('vi-VN') + 'đ';
@@ -35,7 +35,7 @@ function renderNav() {
     <a href="index.html">Sản phẩm</a>
     ${user?.role === 'CUSTOMER' ? '<a href="cart.html">Giỏ hàng</a><a href="orders.html">Đơn hàng</a>' : ''}
     ${user?.role === 'ADMIN' || user?.role === 'STAFF' ? '<a href="admin.html">Quản trị</a>' : ''}
-    ${user ? `<span>Xin chào, ${user.fullName}</span><button onclick="logout()">Đăng xuất</button>` : '<a href="login.html">Đăng nhập</a><a href="register.html">Đăng ký</a>'}
+    ${user ? `<span>Xin chào, ${user.fullname}</span><button onclick="logout()">Đăng xuất</button>` : '<a href="login.html">Đăng nhập</a><a href="register.html">Đăng ký</a>'}
   `;
 }
 

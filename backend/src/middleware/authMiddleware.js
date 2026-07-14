@@ -1,18 +1,26 @@
 const { verify } = require('../utils/authToken');
-const { readDb } = require('../repositories/jsonRepository');
+const User = require('../modules/auth/user.model');
 
-function requireAuth(req, res, next) {
-  const header = req.headers.authorization || '';
-  const token = header.startsWith('Bearer ') ? header.slice(7) : null;
-  const payload = verify(token);
-  if (!payload) return res.status(401).json({ message: 'Vui lòng đăng nhập.' });
+async function requireAuth(req, res, next) {
+  try {
+    const header = req.headers.authorization || '';
+    const token = header.startsWith('Bearer ') ? header.slice(7) : null;
+    if (!token) return res.status(401).json({ message: 'Vui lòng đăng nhập.' });
 
-  const db = readDb();
-  const user = db.users.find(u => u.id === payload.userId && !u.locked);
-  if (!user) return res.status(401).json({ message: 'Tài khoản không hợp lệ hoặc bị khóa.' });
+    const payload = verify(token);
+    if (!payload || !payload.id) return res.status(401).json({ message: 'Vui lòng đăng nhập.' });
 
-  req.user = user;
-  next();
+    // Truy vấn thông tin người dùng từ PostgreSQL
+    const user = await User.findByPk(payload.id);
+    if (!user || user.status === 'LOCKED') {
+      return res.status(401).json({ message: 'Tài khoản không hợp lệ hoặc bị khóa.' });
+    }
+
+    req.user = user.toJSON();
+    next();
+  } catch (error) {
+    return res.status(401).json({ message: 'Vui lòng đăng nhập.' });
+  }
 }
 
 function allowRoles(...roles) {
