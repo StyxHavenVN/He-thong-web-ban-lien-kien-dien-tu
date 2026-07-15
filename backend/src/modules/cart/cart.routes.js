@@ -6,4 +6,5 @@ router.use(requireAuth, allowRoles('CUSTOMER'));
 router.get('/', controller.getCart);
 router.post('/items', controller.addItem);
 router.put('/items/:productId', controller.updateItem);
+router.delete('/items/:productId', controller.removeItem);
 module.exports = router;

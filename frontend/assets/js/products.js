@@ -1,97 +1,58 @@
-document.addEventListener('DOMContentLoaded', function() {
-    const productContainer = document.getElementById('product-list-container');
-    if (!productContainer) return; 
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.getElementById('product-list-container');
+  if (!container) return;
+  const params = new URLSearchParams(location.search);
+  const filters = { keyword: params.get('keyword') || '', categoryId: params.get('category') || '', sort: 'newest' };
+  const money = (value) => Number(value || 0).toLocaleString('vi-VN') + ' ₫';
+  const escapeHtml = (value) => String(value || '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 
-    const formatPrice = (price) => new Intl.NumberFormat('vi-VN').format(price) + ' ₫';
-
-    let currentFilters = {
-        keyword: new URLSearchParams(window.location.search).get('keyword') || '',
-        categoryId: new URLSearchParams(window.location.search).get('category') || '', 
-        sort: 'newest'
-    };
-
-    const fetchAndRenderProducts = async () => {
-        try {
-            productContainer.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 40px; font-weight: bold; color: var(--blue-600);">Đang tải dữ liệu...</p>';
-
-            const queryParams = new URLSearchParams();
-            if (currentFilters.keyword) queryParams.append('keyword', currentFilters.keyword);
-            if (currentFilters.categoryId) queryParams.append('categoryId', currentFilters.categoryId);
-            if (currentFilters.sort) queryParams.append('sort', currentFilters.sort);
-
-            const response = await fetch(`/api/products?${queryParams.toString()}`);
-            const data = await response.json();
-
-            if (response.ok && data.success) {
-                const products = data.data;
-                productContainer.innerHTML = '';
-
-                const totalCountEl = document.getElementById('total-product-count');
-                if (totalCountEl) totalCountEl.innerText = `Hiển thị ${products.length} sản phẩm`;
-
-                if(products.length === 0) {
-                    productContainer.innerHTML = '<p style="grid-column: 1/-1; text-align:center; padding: 40px; color: var(--gray-600);">Không tìm thấy sản phẩm nào.</p>';
-                    return;
-                }
-
-                products.forEach(product => {
-                    let badgeHTML = '';
-                    if (product.badge) {
-                        const bgClass = product.badge === 'MỚI' ? 'bg-blue' : 'bg-red';
-                        badgeHTML = `<div class="catalog-badge ${bgClass}">${product.badge}</div>`;
-                    }
-
-                    let priceHTML = `<div class="price-current text-blue">${formatPrice(product.price)}</div>`;
-                    if (product.oldPrice) {
-                        priceHTML = `<div class="price-current text-red">${formatPrice(product.price)}</div>
-                                     <div class="price-old">${formatPrice(product.oldPrice)}</div>`;
-                    }
-
-                    const cardHTML = `
-                        <div class="catalog-card">
-                            ${badgeHTML}
-                                <div class="catalog-img">
-                                    <img src="${product.image}" alt="${product.name}">
-                                </div>
-                            <div class="catalog-title">${product.name}</div>
-                            <div class="catalog-rating">
-                                <i class="fi fi-sr-star"></i><i class="fi fi-sr-star"></i><i class="fi fi-sr-star"></i><i class="fi fi-sr-star"></i><i class="fi fi-sr-star"></i>
-                                <span>(${product.reviews})</span>
-                            </div>
-                            <div class="catalog-price">${priceHTML}</div>
-                            <div class="catalog-actions">
-                                <button class="btn-cart-outline"><i class="fi fi-rr-shopping-cart"></i></button>
-                                <button class="btn-cart-solid"><i class="fi fi-rr-shopping-cart-add"></i> Thêm vào giỏ</button>
-                            </div>
-                        </div>
-                    `;
-                    productContainer.innerHTML += cardHTML;
-                });
-            }
-        } catch (error) {
-            productContainer.innerHTML = '<p style="grid-column: 1/-1; text-align:center;">Lỗi tải dữ liệu sản phẩm.</p>';
-        }
-    };
-
-    fetchAndRenderProducts();
-
-    const searchInput = document.getElementById('search-input');
-    const searchBtn = document.getElementById('search-btn');
-    if(searchInput) searchInput.value = currentFilters.keyword;
-
-    const executeSearch = (e) => {
-        e.preventDefault();
-        currentFilters.keyword = searchInput.value.trim();
-        fetchAndRenderProducts();
-    };
-    if(searchBtn) searchBtn.addEventListener('click', executeSearch);
-    if(searchInput) searchInput.addEventListener('keypress', (e) => { if(e.key === 'Enter') executeSearch(e); });
-
-    const sortSelect = document.getElementById('sort-select');
-    if(sortSelect) {
-        sortSelect.addEventListener('change', (e) => {
-            currentFilters.sort = e.target.value;
-            fetchAndRenderProducts();
-        });
+  async function loadProducts() {
+    container.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:40px">Đang tải dữ liệu...</p>';
+    const query = new URLSearchParams(Object.entries(filters).filter(([, value]) => value));
+    try {
+      const response = await fetch(`/api/products?${query}`);
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.message);
+      const products = payload.data || [];
+      document.getElementById('total-product-count').textContent = `Hiển thị ${products.length} sản phẩm`;
+      container.innerHTML = products.map((product) => `
+        <article class="catalog-card" data-id="${product.id}">
+          ${product.badge ? `<div class="catalog-badge ${product.badge === 'MỚI' ? 'bg-blue' : 'bg-red'}">${escapeHtml(product.badge)}</div>` : ''}
+          <a class="catalog-img" href="product-detail.html?id=${encodeURIComponent(product.id)}"><img src="${escapeHtml(product.image)}" alt="${escapeHtml(product.name)}"></a>
+          <a class="catalog-title" href="product-detail.html?id=${encodeURIComponent(product.id)}">${escapeHtml(product.name)}</a>
+          <div class="catalog-rating"><i class="fi fi-sr-star"></i> ${product.rating || 5} <span>(${product.reviews || 0})</span></div>
+          <div class="catalog-price"><div class="price-current ${product.oldPrice ? 'text-red' : 'text-blue'}">${money(product.price)}</div>${product.oldPrice ? `<div class="price-old">${money(product.oldPrice)}</div>` : ''}</div>
+          <div class="catalog-actions"><a class="btn-cart-outline" href="product-detail.html?id=${encodeURIComponent(product.id)}" aria-label="Xem chi tiết">⌕</a><button class="btn-cart-solid add-cart"><i class="fi fi-rr-shopping-cart-add"></i> Thêm vào giỏ</button></div>
+        </article>`).join('') || '<p style="grid-column:1/-1;text-align:center;padding:40px">Không tìm thấy sản phẩm.</p>';
+    } catch (error) {
+      container.innerHTML = `<p style="grid-column:1/-1;text-align:center">${escapeHtml(error.message || 'Lỗi tải sản phẩm.')}</p>`;
     }
+  }
+
+  container.addEventListener('click', async (event) => {
+    const button = event.target.closest('.add-cart');
+    if (!button) return;
+    const token = localStorage.getItem('accessToken');
+    if (!token) return location.href = 'login.html';
+    try {
+      button.disabled = true;
+      const response = await fetch('/api/cart/items', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+        body: JSON.stringify({ productId: button.closest('.catalog-card').dataset.id, quantity: 1 })
+      });
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.message);
+      alert('Đã thêm sản phẩm vào giỏ hàng.');
+    } catch (error) { alert(error.message); }
+    finally { button.disabled = false; }
+  });
+
+  const searchInput = document.getElementById('search-input');
+  if (searchInput) searchInput.value = filters.keyword;
+  const executeSearch = () => { filters.keyword = searchInput.value.trim(); loadProducts(); };
+  document.getElementById('search-btn')?.addEventListener('click', executeSearch);
+  searchInput?.addEventListener('keydown', (event) => { if (event.key === 'Enter') executeSearch(); });
+  document.getElementById('sort-select')?.addEventListener('change', (event) => { filters.sort = event.target.value; loadProducts(); });
+  loadProducts();
 });

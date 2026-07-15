@@ -1,14 +1,22 @@
-const { readDb } = require('../repositories/jsonRepository');
+const reportRepository = require('../../repositories/report.repository');
 
-function revenueReport() {
-  const db = readDb();
-  const completed = db.orders.filter(o => o.status === 'COMPLETED');
-  const revenue = completed.reduce((sum, o) => sum + o.totalAmount, 0);
-  const orderCount = completed.length;
-  const sold = {};
-  completed.forEach(o => o.items.forEach(i => sold[i.productName] = (sold[i.productName] || 0) + i.quantity));
-  const bestSellers = Object.entries(sold).map(([name, quantity]) => ({ name, quantity })).sort((a,b) => b.quantity - a.quantity);
-  return { revenue, orderCount, bestSellers };
+async function revenueReport() {
+  const completed = await reportRepository.listCompletedOrders();
+  const revenue = completed.reduce((sum, order) => sum + order.totalAmount, 0);
+  const sold = new Map();
+  completed.flatMap((order) => order.items || []).forEach((item) => {
+    sold.set(item.productName, (sold.get(item.productName) || 0) + item.quantity);
+  });
+  const bestSellers = [...sold.entries()]
+    .map(([name, quantity]) => ({ name, quantity }))
+    .sort((a, b) => b.quantity - a.quantity)
+    .slice(0, 10);
+  return {
+    revenue,
+    orderCount: completed.length,
+    productsSold: [...sold.values()].reduce((sum, quantity) => sum + quantity, 0),
+    bestSellers
+  };
 }
 
 module.exports = { revenueReport };

@@ -4,17 +4,26 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BlueTech PC Store</title>
-    
+
     <link rel="stylesheet" href="assets/css/styles.css" />
     <link rel="stylesheet" href="assets/css/header.css" />
     <link rel="stylesheet" href="assets/css/navbar.css" />
     <link rel="stylesheet" href="assets/css/hero.css" />
     <link rel="stylesheet" href="assets/css/products.css" />
     <link rel="stylesheet" href="assets/css/responsive.css" />
-    
-    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css" />
-    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css" />
-    <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css"
+    />
   </head>
   <body>
     <header class="main-header">
@@ -24,7 +33,10 @@
         </div>
 
         <div class="search-bar">
-          <input type="text" placeholder="Bạn cần tìm gì? (VD: RTX 5060, i7-14700K…)" />
+          <input
+            type="text"
+            placeholder="Bạn cần tìm gì? (VD: RTX 5060, i7-14700K…)"
+          />
           <button type="submit" class="search-btn">
             <i class="fi fi-br-search"></i>
           </button>
@@ -49,25 +61,37 @@
               <span class="action-value">Showroom</span>
             </div>
           </div>
-          
+
           <div class="action-item">
             <span class="action-icon">
               <i class="fi fi-sr-user"></i>
             </span>
             <div class="action-text" id="user-auth-area">
-              <a href="login.html" class="action-label" style="text-decoration: none; color: inherit;">Đăng nhập</a>
-              <a href="register.html" class="action-value" style="text-decoration: none; color: inherit;">Đăng ký</a>
+              <a
+                href="login.html"
+                class="action-label"
+                style="text-decoration: none; color: inherit"
+                >Đăng nhập</a
+              >
             </div>
           </div>
 
-          <div class="action-item cart-btn">
+          <a
+            class="action-item cart-btn"
+            href="cart.html"
+            aria-label="Mở giỏ hàng"
+          >
             <span class="action-icon">
               <i class="fi fi-rr-shopping-cart"></i>
             </span>
             <div class="action-text">
-              <span class="action-label" style="font-size: 13px; font-weight: 700;">Giỏ hàng</span>
+              <span
+                class="action-label"
+                style="font-size: 13px; font-weight: 700"
+                >Giỏ hàng</span
+              >
             </div>
-          </div>
+          </a>
         </div>
       </div>
     </header>
@@ -77,10 +101,14 @@
         <div class="nav-item"><i class="fi fi-sr-settings"></i> Build PC</div>
         <div class="nav-item"><i class="fi fi-sr-star"></i> Khuyến mãi</div>
         <div class="nav-item"><i class="fi fi-sr-laptop"></i> Laptop</div>
-        <div class="nav-item"><i class="fi fi-sr-box-alt"></i> PC - Linh kiện</div>
+        <div class="nav-item">
+          <i class="fi fi-sr-box-alt"></i> PC - Linh kiện
+        </div>
         <div class="nav-item"><i class="fi fi-sr-headphones"></i> Phụ kiện</div>
         <div class="nav-item"><i class="fi fi-sr-screen"></i> Màn hình</div>
-        <div class="nav-item"><i class="fi fi-sr-mouse"></i> Thiết bị ngoại vi</div>
+        <div class="nav-item">
+          <i class="fi fi-sr-mouse"></i> Thiết bị ngoại vi
+        </div>
         <div class="nav-item"><i class="fi fi-sr-document"></i> Tin tức</div>
         <div class="nav-item"><i class="fi fi-sr-headset"></i> Hỗ trợ</div>
       </div>
@@ -89,29 +117,184 @@
     <div class="main-layout container">
       <aside class="sidebar-menu">
         <div class="sidebar-title">☰ DANH MỤC SẢN PHẨM</div>
-<ul class="menu-list">
-          <li><a href="products.html" data-cat="all" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">Tất cả sản phẩm</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-laptop" data-cat="cat-laptop" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">Laptop</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-laptop-gaming" data-cat="cat-laptop-gaming" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">Laptop Gaming</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-pc-full" data-cat="cat-pc-full" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">PC - Máy tính bộ</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-cpu" data-cat="cat-cpu" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">CPU - Bộ vi xử lý</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-mainboard" data-cat="cat-mainboard" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">Mainboard</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-vga" data-cat="cat-vga" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">VGA - Card màn hình</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-ram" data-cat="cat-ram" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">RAM - Bộ nhớ</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-ssd" data-cat="cat-ssd" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">Ổ cứng - SSD</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-psu" data-cat="cat-psu" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">Nguồn - PSU</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-case" data-cat="cat-case" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">Vỏ case</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-cooler" data-cat="cat-cooler" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">Tản nhiệt</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-monitor" data-cat="cat-monitor" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">Màn hình</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="products.html?category=cat-audio" data-cat="cat-audio" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left">Âm thanh - Tai nghe</div><span class="menu-arrow">›</span></a></li>
-          <li><a href="#" style="display: flex; justify-content: space-between; width: 100%; text-decoration: none; color: inherit; padding: 4px 0;"><div class="menu-left" style="color: var(--orange); font-weight: 600;">Khuyến mãi</div><span class="menu-arrow">›</span></a></li>
+        <ul class="menu-list">
+          <li>
+            <a
+              href="products.html"
+              data-cat="all"
+              style="
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                text-decoration: none;
+                color: inherit;
+                padding: 4px 0;
+              "
+            >
+              <div class="menu-left">
+                <span class="icon"></span> Tất cả sản phẩm
+              </div>
+              <span class="menu-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="products.html?category=cat-cpu"
+              data-cat="cat-cpu"
+              style="
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                text-decoration: none;
+                color: inherit;
+                padding: 4px 0;
+              "
+            >
+              <div class="menu-left">
+                <span class="icon"></span> CPU - Bộ vi xử lý
+              </div>
+              <span class="menu-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="products.html?category=cat-mainboard"
+              data-cat="cat-mainboard"
+              style="
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                text-decoration: none;
+                color: inherit;
+                padding: 4px 0;
+              "
+            >
+              <div class="menu-left">
+                <span class="icon"></span> Mainboard - Bo mạch chủ
+              </div>
+              <span class="menu-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="products.html?category=cat-vga"
+              data-cat="cat-vga"
+              style="
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                text-decoration: none;
+                color: inherit;
+                padding: 4px 0;
+              "
+            >
+              <div class="menu-left">
+                <span class="icon"></span> VGA - Card màn hình
+              </div>
+              <span class="menu-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="products.html?category=cat-ram"
+              data-cat="cat-ram"
+              style="
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                text-decoration: none;
+                color: inherit;
+                padding: 4px 0;
+              "
+            >
+              <div class="menu-left">
+                <span class="icon"></span> RAM - Bộ nhớ
+              </div>
+              <span class="menu-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="products.html?category=cat-ssd"
+              data-cat="cat-ssd"
+              style="
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                text-decoration: none;
+                color: inherit;
+                padding: 4px 0;
+              "
+            >
+              <div class="menu-left">
+                <span class="icon"></span> Ổ cứng - SSD
+              </div>
+              <span class="menu-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="products.html?category=cat-psu"
+              data-cat="cat-psu"
+              style="
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                text-decoration: none;
+                color: inherit;
+                padding: 4px 0;
+              "
+            >
+              <div class="menu-left">
+                <span class="icon"></span> Nguồn - PSU
+              </div>
+              <span class="menu-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="products.html?category=cat-case"
+              data-cat="cat-case"
+              style="
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                text-decoration: none;
+                color: inherit;
+                padding: 4px 0;
+              "
+            >
+              <div class="menu-left"><span class="icon"></span> Vỏ case</div>
+              <span class="menu-arrow">›</span>
+            </a>
+          </li>
+          <li>
+            <a
+              href="products.html?category=cat-cooler"
+              data-cat="cat-cooler"
+              style="
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                text-decoration: none;
+                color: inherit;
+                padding: 4px 0;
+              "
+            >
+              <div class="menu-left"><span class="icon"></span> Tản nhiệt</div>
+              <span class="menu-arrow">›</span>
+            </a>
+          </li>
         </ul>
       </aside>
 
       <div class="main-content">
         <div class="hero-banners">
           <div class="main-slider">
-            <img src="assets/banners/main-banner.png" alt="Hiệu năng đỉnh cao" />
+            <img
+              src="assets/banners/main-banner.png"
+              alt="Hiệu năng đỉnh cao"
+            />
             <div class="slider-dots">
               <span class="dot active"></span>
               <span class="dot"></span>
@@ -123,21 +306,30 @@
             <a href="#" class="sub-banner-item">
               <div class="sub-banner-content">
                 <div class="sub-banner-img">
-                  <img src="assets/banners/monitor-banner.png" alt="Màn hình Gaming 240Hz" />
+                  <img
+                    src="assets/banners/monitor-banner.png"
+                    alt="Màn hình Gaming 240Hz"
+                  />
                 </div>
               </div>
             </a>
             <a href="#" class="sub-banner-item">
               <div class="sub-banner-content">
                 <div class="sub-banner-img">
-                  <img src="assets/banners/accessory-banner.png" alt="Phụ kiện" />
+                  <img
+                    src="assets/banners/accessory-banner.png"
+                    alt="Phụ kiện"
+                  />
                 </div>
               </div>
             </a>
             <a href="#" class="sub-banner-item">
               <div class="sub-banner-content">
                 <div class="sub-banner-img">
-                  <img src="assets/banners/installment-banner.png" alt="Trả góp 0%" />
+                  <img
+                    src="assets/banners/installment-banner.png"
+                    alt="Trả góp 0%"
+                  />
                 </div>
               </div>
             </a>
@@ -145,11 +337,41 @@
         </div>
 
         <div class="trust-bar">
-          <div class="trust-item"><span class="icon">🚚</span><div><strong>Giao hàng toàn quốc</strong><p>Miễn phí đơn từ 1.000.000đ</p></div></div>
-          <div class="trust-item"><span class="icon">📦</span><div><strong>Kiểm tra hàng trước</strong><p>Khi thanh toán</p></div></div>
-          <div class="trust-item"><span class="icon">🛡️</span><div><strong>Bảo hành chính hãng</strong><p>Lên đến 36 tháng</p></div></div>
-          <div class="trust-item"><span class="icon">🔄</span><div><strong>1 đổi 1 trong 7 ngày</strong><p>Nếu lỗi do nhà sản xuất</p></div></div>
-          <div class="trust-item"><span class="icon">🎧</span><div><strong>Hỗ trợ 24/7</strong><p>1900.1234</p></div></div>
+          <div class="trust-item">
+            <span class="icon">🚚</span>
+            <div>
+              <strong>Giao hàng toàn quốc</strong>
+              <p>Miễn phí đơn từ 1.000.000đ</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <span class="icon">📦</span>
+            <div>
+              <strong>Kiểm tra hàng trước</strong>
+              <p>Khi thanh toán</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <span class="icon">🛡️</span>
+            <div>
+              <strong>Bảo hành chính hãng</strong>
+              <p>Lên đến 36 tháng</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <span class="icon">🔄</span>
+            <div>
+              <strong>1 đổi 1 trong 7 ngày</strong>
+              <p>Nếu lỗi do nhà sản xuất</p>
+            </div>
+          </div>
+          <div class="trust-item">
+            <span class="icon">🎧</span>
+            <div>
+              <strong>Hỗ trợ 24/7</strong>
+              <p>1900.1234</p>
+            </div>
+          </div>
         </div>
 
         <div class="featured-categories">
@@ -164,36 +386,81 @@
             </ul>
           </div>
           <div class="category-grid">
-            <div class="cat-card"><img src="assets/categories/cpu.png" alt="CPU" /><h4>CPU</h4><p>Bộ vi xử lý</p></div>
-            <div class="cat-card"><img src="assets/categories/vga.png" alt="VGA" /><h4>VGA</h4><p>Card màn hình</p></div>
-            <div class="cat-card"><img src="assets/categories/mainboard.png" alt="Mainboard" /><h4>Mainboard</h4><p>Bo mạch chủ</p></div>
-            <div class="cat-card"><img src="assets/categories/ram.png" alt="RAM" /><h4>RAM</h4><p>Bộ nhớ trong</p></div>
-            <div class="cat-card"><img src="assets/categories/ssd.png" alt="SSD" /><h4>SSD</h4><p>Ổ cứng SSD</p></div>
-            <div class="cat-card"><img src="assets/categories/psu.png" alt="PSU" /><h4>Nguồn - PSU</h4><p>Nguồn máy tính</p></div>
-            <div class="cat-card"><img src="assets/categories/case.png" alt="Case" /><h4>Vỏ Case</h4><p>Vỏ máy tính</p></div>
-            <div class="cat-card"><img src="assets/categories/cooler.png" alt="Tản nhiệt" /><h4>Tản Nhiệt</h4><p>Tản nhiệt CPU</p></div>
+            <div class="cat-card">
+              <img src="assets/categories/cpu.png" alt="CPU" />
+              <h4>CPU</h4>
+              <p>Bộ vi xử lý</p>
+            </div>
+            <div class="cat-card">
+              <img src="assets/categories/vga.png" alt="VGA" />
+              <h4>VGA</h4>
+              <p>Card màn hình</p>
+            </div>
+            <div class="cat-card">
+              <img src="assets/categories/mainboard.png" alt="Mainboard" />
+              <h4>Mainboard</h4>
+              <p>Bo mạch chủ</p>
+            </div>
+            <div class="cat-card">
+              <img src="assets/categories/ram.png" alt="RAM" />
+              <h4>RAM</h4>
+              <p>Bộ nhớ trong</p>
+            </div>
+            <div class="cat-card">
+              <img src="assets/categories/ssd.png" alt="SSD" />
+              <h4>SSD</h4>
+              <p>Ổ cứng SSD</p>
+            </div>
+            <div class="cat-card">
+              <img src="assets/categories/psu.png" alt="PSU" />
+              <h4>Nguồn - PSU</h4>
+              <p>Nguồn máy tính</p>
+            </div>
+            <div class="cat-card">
+              <img src="assets/categories/case.png" alt="Case" />
+              <h4>Vỏ Case</h4>
+              <p>Vỏ máy tính</p>
+            </div>
+            <div class="cat-card">
+              <img src="assets/categories/cooler.png" alt="Tản nhiệt" />
+              <h4>Tản Nhiệt</h4>
+              <p>Tản nhiệt CPU</p>
+            </div>
           </div>
         </div>
 
         <div class="bottom-promo-banners">
           <div class="promo-banner blue-bg">
-            <div class="promo-content"><h4>COMBO NÂNG CẤP</h4><h3>ƯU ĐÃI ĐẾN 20%</h3></div>
-            <div class="promo-img"><img src="assets/categories/vga.png" alt="Combo nâng cấp" /></div>
+            <div class="promo-content">
+              <h4>COMBO NÂNG CẤP</h4>
+              <h3>ƯU ĐÃI ĐẾN 20%</h3>
+            </div>
+            <div class="promo-img">
+              <img src="assets/categories/vga.png" alt="Combo nâng cấp" />
+            </div>
           </div>
           <div class="promo-banner dark-blue-bg">
-            <div class="promo-content"><h4>LAPTOP GAMING</h4><h3>HIỆU NĂNG MẠNH MẼ</h3></div>
-            <div class="promo-img"><img src="assets/categories/cpu_ver2.png" alt="Laptop Gaming" /></div>
+            <div class="promo-content">
+              <h4>LAPTOP GAMING</h4>
+              <h3>HIỆU NĂNG MẠNH MẼ</h3>
+            </div>
+            <div class="promo-img">
+              <img src="assets/categories/cpu_ver2.png" alt="Laptop Gaming" />
+            </div>
           </div>
           <div class="promo-banner deep-blue-bg">
-            <div class="promo-content"><h4>PC ĐỒ HỌA · RENDER</h4><h3>MƯỢT MỌI TÁC VỤ</h3></div>
-            <div class="promo-img"><img src="assets/categories/mainboard.png" alt="PC Đồ họa" /></div>
+            <div class="promo-content">
+              <h4>PC ĐỒ HỌA · RENDER</h4>
+              <h3>MƯỢT MỌI TÁC VỤ</h3>
+            </div>
+            <div class="promo-img">
+              <img src="assets/categories/mainboard.png" alt="PC Đồ họa" />
+            </div>
           </div>
         </div>
       </div>
     </div>
 
     <script src="assets/js/auth.js"></script>
-    <script src="js/slider.js"></script>
-    <script src="js/main.js"></script>
   </body>
 </html>

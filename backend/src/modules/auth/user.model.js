@@ -19,7 +19,8 @@ const User = sequelize.define('User', {
     },
     phone: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
+        unique: true
     },
     password: {
         type: DataTypes.STRING,
@@ -30,7 +31,8 @@ const User = sequelize.define('User', {
     },
     role: {
         type: DataTypes.STRING,
-        defaultValue: 'CUSTOMER'
+        defaultValue: 'CUSTOMER',
+        validate: { isIn: [['CUSTOMER', 'STAFF', 'ADMIN']] }
     },
     status: {
         type: DataTypes.STRING,

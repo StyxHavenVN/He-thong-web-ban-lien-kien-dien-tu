@@ -1,13 +1,13 @@
-const { v4: uuid } = require('uuid');
-
-function processPayment(db, order, method = 'ONLINE') {
-  const payment = {
-    id: uuid(), orderId: order.id, amount: order.totalAmount, method,
-    status: method === 'COD' ? 'PENDING_COD' : 'SUCCESS', createdAt: new Date().toISOString()
+function createPayment(order, method = 'COD', simulateFailure = false) {
+  const online = method === 'ONLINE';
+  return {
+    orderId: order.id,
+    provider: online ? 'BluePay Sandbox' : 'COD',
+    method,
+    amount: order.totalAmount,
+    status: online ? (simulateFailure ? 'FAILED' : 'SUCCESS') : 'PENDING',
+    transactionRef: online && !simulateFailure ? `BP${Date.now()}` : null
   };
-  db.payments.push(payment);
-  if (method !== 'COD') order.paymentStatus = 'PAID';
-  return payment;
 }
 
-module.exports = { processPayment };
+module.exports = { createPayment };

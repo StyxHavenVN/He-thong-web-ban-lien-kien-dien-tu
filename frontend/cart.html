@@ -1,4 +1,710 @@
-<!DOCTYPE html><html lang="vi"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Giỏ hàng</title><link rel="stylesheet" href="assets/css/styles.css"></head>
-<body><header class="header"><div class="logo">Linh Kiện Shop</div><nav id="nav" class="nav"></nav></header>
-<main class="container"><h1>Giỏ hàng</h1><div id="notice" class="notice"></div><div class="layout-2"><section class="table-wrap"><table><thead><tr><th>Sản phẩm</th><th>Số lượng</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead><tbody id="cartItems"></tbody></table></section><aside class="card"><div class="card-body"><h2>Thanh toán</h2><p>Tổng tiền: <b id="total">0đ</b></p><div class="form-row"><label>Địa chỉ giao hàng</label><textarea id="shippingAddress" rows="3"></textarea></div><div class="form-row"><label>Phương thức thanh toán</label><select id="paymentMethod"><option value="COD">Thanh toán khi nhận hàng</option><option value="ONLINE">Thanh toán trực tuyến</option></select></div><button onclick="checkout()">Đặt hàng</button></div></aside></div></main>
-<script src="assets/js/api.js"></script><script src="assets/js/cart.js"></script></body></html>
+<!doctype html>
+
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Giỏ hàng | BlueTech PC Store</title>
+    <link href="assets/css/styles.css" rel="stylesheet" />
+    <link href="assets/css/header.css" rel="stylesheet" />
+    <link href="assets/css/navbar.css" rel="stylesheet" />
+    <link href="assets/css/cart.css" rel="stylesheet" />
+    <link href="assets/css/responsive.css" rel="stylesheet" />
+    <link
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-solid-rounded/css/uicons-solid-rounded.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-regular-rounded/css/uicons-regular-rounded.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn-uicons.flaticon.com/2.1.0/uicons-bold-rounded/css/uicons-bold-rounded.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="main-header">
+      <div class="container header-container">
+        <a aria-label="Về trang chủ" class="logo" href="index.html">
+          <img alt="BlueTech Logo" src="assets/logo/logo_ver2.png" />
+        </a>
+        <form action="products.html" class="search-bar" method="get">
+          <input
+            name="search"
+            placeholder="Bạn cần tìm gì? (VD: RTX 5060, i7-14700K…)"
+            type="text"
+          />
+          <button aria-label="Tìm kiếm" class="search-btn" type="submit">
+            <i class="fi fi-br-search"></i>
+          </button>
+        </form>
+        <div class="header-actions">
+          <a class="action-item" href="tel:19001234">
+            <span class="action-icon"><i class="fi fi-sr-phone-call"></i></span>
+            <span class="action-text">
+              <span class="action-label">Hotline</span>
+              <span class="action-value">1900.1234</span>
+            </span>
+          </a>
+          <a class="action-item" href="#">
+            <span class="action-icon"><i class="fi fi-sr-marker"></i></span>
+            <span class="action-text">
+              <span class="action-label">Hệ thống</span>
+              <span class="action-value">Showroom</span>
+            </span>
+          </a>
+          <div class="action-item">
+            <span class="action-icon"><i class="fi fi-sr-user"></i></span>
+            <div class="action-text" id="user-auth-area">
+              <a class="action-label" href="login.html">Đăng nhập</a>
+            </div>
+          </div>
+          <a class="action-item cart-btn cart-btn-active" href="cart.html">
+            <span class="action-icon cart-icon-wrap">
+              <i class="fi fi-rr-shopping-cart"></i>
+              <span class="header-cart-count" id="header-cart-count">0</span>
+            </span>
+            <span class="action-text">
+              <span class="action-label cart-label">Giỏ hàng</span>
+            </span>
+          </a>
+        </div>
+      </div>
+    </header>
+    <nav class="main-nav">
+      <div class="container nav-container">
+        <a class="nav-item" href="#"
+          ><i class="fi fi-sr-settings"></i> Build PC</a
+        >
+        <a class="nav-item" href="#"
+          ><i class="fi fi-sr-star"></i> Khuyến mãi</a
+        >
+        <a class="nav-item" href="products.html?category=cat-laptop"
+          ><i class="fi fi-sr-laptop"></i> Laptop</a
+        >
+        <a class="nav-item" href="products.html"
+          ><i class="fi fi-sr-box-alt"></i> PC - Linh kiện</a
+        >
+        <a class="nav-item" href="#"
+          ><i class="fi fi-sr-headphones"></i> Phụ kiện</a
+        >
+        <a class="nav-item" href="products.html?category=cat-monitor"
+          ><i class="fi fi-sr-screen"></i> Màn hình</a
+        >
+        <a class="nav-item" href="#"
+          ><i class="fi fi-sr-mouse"></i> Thiết bị ngoại vi</a
+        >
+        <a class="nav-item" href="#"
+          ><i class="fi fi-sr-document"></i> Tin tức</a
+        >
+        <a class="nav-item" href="#"><i class="fi fi-sr-headset"></i> Hỗ trợ</a>
+      </div>
+    </nav>
+    <main class="cart-page container">
+      <nav aria-label="Breadcrumb" class="breadcrumb">
+        <a href="index.html">Trang chủ</a>
+        <i class="fi fi-rr-angle-small-right"></i>
+        <span>Giỏ hàng</span>
+      </nav>
+      <section class="cart-heading">
+        <div>
+          <h1>Giỏ hàng của bạn</h1>
+          <p>
+            Bạn đang có
+            <strong id="cart-product-count">0 sản phẩm</strong> trong giỏ hàng.
+          </p>
+        </div>
+        <a class="continue-shopping" href="products.html">
+          <i class="fi fi-rr-arrow-left"></i>
+          Tiếp tục mua hàng
+        </a>
+      </section>
+      <section class="cart-layout" id="cart-content">
+        <div class="cart-products-card">
+          <div class="cart-table-header">
+            <label class="select-all-label">
+              <input id="select-all" type="checkbox" />
+              <span>Chọn tất cả</span>
+            </label>
+            <span>Đơn giá</span>
+            <span>Số lượng</span>
+            <span>Thành tiền</span>
+            <span></span>
+          </div>
+          <div class="cart-list" id="cart-list">
+            <p class="cart-loading">Đang tải dữ liệu giỏ hàng...</p>
+          </div>
+          <div class="cart-list-footer">
+            <button class="clear-cart" id="clear-cart" type="button">
+              <i class="fi fi-rr-trash"></i>
+              Xóa toàn bộ giỏ hàng
+            </button>
+            <p>
+              <i class="fi fi-sr-shield-check"></i> Sản phẩm được bảo hành chính
+              hãng.
+            </p>
+          </div>
+        </div>
+        <aside class="cart-summary">
+          <div class="summary-card coupon-card">
+            <h2>Mã giảm giá</h2>
+            <p>Nhập mã khuyến mãi để nhận ưu đãi.</p>
+            <div class="coupon-form">
+              <input
+                id="coupon-input"
+                maxlength="20"
+                placeholder="Ví dụ: BLUETECH10"
+                type="text"
+              />
+              <button id="apply-coupon" type="button">Áp dụng</button>
+            </div>
+            <span class="coupon-message" id="coupon-message"></span>
+          </div>
+          <div class="summary-card order-summary">
+            <h2>Tóm tắt đơn hàng</h2>
+            <div class="summary-row">
+              <span>Tạm tính</span>
+              <strong id="subtotal">0₫</strong>
+            </div>
+            <div class="summary-row">
+              <span>Giảm giá</span>
+              <strong class="discount" id="discount">−0₫</strong>
+            </div>
+            <div class="summary-row">
+              <span>Phí vận chuyển</span>
+              <strong id="shipping-fee">Miễn phí</strong>
+            </div>
+            <div class="shipping-options">
+              <label class="shipping-option active">
+                <input checked="" name="shipping" type="radio" value="0" />
+                <span>
+                  <strong>Giao hàng tiêu chuẩn</strong>
+                  <small>Nhận hàng trong 2–4 ngày</small>
+                </span>
+                <b>Miễn phí</b>
+              </label>
+              <label class="shipping-option">
+                <input name="shipping" type="radio" value="50000" />
+                <span>
+                  <strong>Giao hàng nhanh</strong>
+                  <small>Nhận hàng trong 1–2 ngày</small>
+                </span>
+                <b>50.000₫</b>
+              </label>
+            </div>
+            <div class="summary-total">
+              <span>Tổng thanh toán</span>
+              <strong id="grand-total">0₫</strong>
+            </div>
+            <p class="vat-note">Đã bao gồm VAT (nếu có)</p>
+            <a
+              aria-disabled="true"
+              class="checkout-btn disabled"
+              href="checkout.html"
+              id="checkout-btn"
+            >
+              Tiến hành thanh toán
+              <i class="fi fi-rr-arrow-right"></i>
+            </a>
+            <div class="payment-note">
+              <i class="fi fi-sr-lock"></i>
+              <span>Thanh toán an toàn và bảo mật</span>
+            </div>
+          </div>
+          <div class="support-card">
+            <span class="support-icon"><i class="fi fi-sr-headset"></i></span>
+            <div>
+              <strong>Cần hỗ trợ đặt hàng?</strong>
+              <p>Gọi ngay <a href="tel:19001234">1900.1234</a></p>
+            </div>
+          </div>
+        </aside>
+      </section>
+      <section class="empty-cart" hidden="" id="empty-cart">
+        <div class="empty-cart-icon">
+          <i class="fi fi-rr-shopping-cart"></i>
+        </div>
+        <h2>Giỏ hàng của bạn đang trống</h2>
+        <p>Hãy khám phá các sản phẩm công nghệ nổi bật tại BlueTech.</p>
+        <a class="empty-cart-btn" href="products.html">Tiếp tục mua sắm</a>
+      </section>
+      <section class="cart-benefits">
+        <div class="benefit-item">
+          <i class="fi fi-sr-truck-side"></i>
+          <div>
+            <strong>Giao hàng toàn quốc</strong
+            ><span>Miễn phí đơn từ 1 triệu</span>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <i class="fi fi-sr-shield-check"></i>
+          <div>
+            <strong>Bảo hành chính hãng</strong><span>Lên đến 36 tháng</span>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <i class="fi fi-sr-refresh"></i>
+          <div>
+            <strong>Đổi trả trong 7 ngày</strong
+            ><span>Nếu lỗi từ nhà sản xuất</span>
+          </div>
+        </div>
+        <div class="benefit-item">
+          <i class="fi fi-sr-headset"></i>
+          <div><strong>Hỗ trợ 24/7</strong><span>Hotline 1900.1234</span></div>
+        </div>
+      </section>
+    </main>
+    <script src="assets/js/auth.js"></script>
+
+    <script>
+      (() => {
+        "use strict";
+
+        const API_BASE = "";
+        const fallbackImage = "assets/images/product-placeholder.svg";
+
+        const state = {
+          cart: { items: [], total: 0 },
+          selected: new Set(),
+          discountRate: 0,
+          shippingFee: 0,
+          loading: false,
+        };
+
+        const elements = {
+          cartContent: document.getElementById("cart-content"),
+          cartList: document.getElementById("cart-list"),
+          emptyCart: document.getElementById("empty-cart"),
+          selectAll: document.getElementById("select-all"),
+          clearCart: document.getElementById("clear-cart"),
+          headerCount: document.getElementById("header-cart-count"),
+          productCount: document.getElementById("cart-product-count"),
+          subtotal: document.getElementById("subtotal"),
+          discount: document.getElementById("discount"),
+          shippingFee: document.getElementById("shipping-fee"),
+          grandTotal: document.getElementById("grand-total"),
+          couponInput: document.getElementById("coupon-input"),
+          couponMessage: document.getElementById("coupon-message"),
+          applyCoupon: document.getElementById("apply-coupon"),
+          checkoutButton: document.getElementById("checkout-btn"),
+        };
+
+        const formatCurrency = (value) =>
+          new Intl.NumberFormat("vi-VN", {
+            style: "currency",
+            currency: "VND",
+            maximumFractionDigits: 0,
+          }).format(Number(value || 0));
+
+        const escapeHtml = (value) =>
+          String(value ?? "")
+            .replaceAll("&", "&amp;")
+            .replaceAll("<", "&lt;")
+            .replaceAll(">", "&gt;")
+            .replaceAll('"', "&quot;")
+            .replaceAll("'", "&#039;");
+
+        const getToken = () =>
+          localStorage.getItem("accessToken") || localStorage.getItem("token");
+
+        const getCurrentUser = () => {
+          for (const key of ["userInfo", "user"]) {
+            try {
+              const value = JSON.parse(localStorage.getItem(key) || "null");
+              if (value) return value;
+            } catch (_) {}
+          }
+          return null;
+        };
+
+        const clearSession = () => {
+          ["accessToken", "token", "userInfo", "user"].forEach((key) =>
+            localStorage.removeItem(key),
+          );
+        };
+
+        async function request(path, options = {}) {
+          const headers = { ...(options.headers || {}) };
+          const token = getToken();
+          if (token) headers.Authorization = `Bearer ${token}`;
+
+          let body = options.body;
+          if (body !== undefined && !(body instanceof FormData)) {
+            headers["Content-Type"] ||= "application/json";
+            if (typeof body !== "string") body = JSON.stringify(body);
+          }
+
+          const response = await fetch(API_BASE + path, {
+            ...options,
+            headers,
+            body,
+          });
+          const payload = await response.json().catch(() => ({}));
+
+          if (response.status === 401) {
+            clearSession();
+            alert("Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.");
+            location.href = "login.html";
+            throw Object.assign(new Error("Phiên đăng nhập đã hết hạn."), {
+              status: 401,
+            });
+          }
+
+          if (!response.ok) {
+            const error = new Error(
+              payload.message || "Không thể lấy dữ liệu từ máy chủ.",
+            );
+            error.status = response.status;
+            throw error;
+          }
+
+          return payload.data && Array.isArray(payload.data.items)
+            ? payload.data
+            : payload;
+        }
+
+        function setLoading(isLoading) {
+          state.loading = isLoading;
+          if (!elements.cartList) return;
+          if (isLoading) {
+            elements.cartList.innerHTML =
+              '<p class="cart-loading">Đang tải dữ liệu giỏ hàng...</p>';
+          }
+        }
+
+        function normalizeCart(payload) {
+          const items = Array.isArray(payload?.items) ? payload.items : [];
+          return {
+            items: items
+              .filter((item) => item && item.product)
+              .map((item) => ({
+                productId: String(item.productId ?? item.product?.id ?? ""),
+                quantity: Math.max(1, Number(item.quantity || 1)),
+                product: item.product,
+              }))
+              .filter((item) => item.productId),
+            total: Number(payload?.total || 0),
+          };
+        }
+
+        async function loadCart() {
+          setLoading(true);
+          try {
+            state.cart = normalizeCart(await request("/api/cart"));
+            state.selected = new Set(
+              state.cart.items.map((item) => item.productId),
+            );
+            renderCart();
+          } catch (error) {
+            if (error.status !== 401) {
+              elements.cartList.innerHTML = `<p class="cart-loading">${escapeHtml(error.message)}</p>`;
+              alert(`Không tải được giỏ hàng: ${error.message}`);
+            }
+          } finally {
+            state.loading = false;
+          }
+        }
+
+        function renderCart() {
+          const items = state.cart.items;
+          const isEmpty = items.length === 0;
+
+          elements.cartContent.hidden = isEmpty;
+          elements.emptyCart.hidden = !isEmpty;
+
+          if (isEmpty) {
+            elements.cartList.innerHTML = "";
+            updateSummary();
+            return;
+          }
+
+          elements.cartList.innerHTML = items
+            .map((item) => {
+              const product = item.product || {};
+              const productId = escapeHtml(item.productId);
+              const name = escapeHtml(product.name || "Sản phẩm");
+              const image = escapeHtml(product.image || fallbackImage);
+              const price = Number(product.price || 0);
+              const stock = Math.max(0, Number(product.stock || 0));
+              const checked = state.selected.has(item.productId)
+                ? "checked"
+                : "";
+              const stockLabel =
+                stock > 0 ? `Còn ${stock} sản phẩm` : "Hết hàng";
+
+              return `
+          <article class="cart-item" data-id="${productId}" data-price="${price}">
+            <div class="cart-check">
+              <input class="item-checkbox" type="checkbox" ${checked} aria-label="Chọn ${name}" />
+            </div>
+            <div class="cart-product">
+              <a class="product-image" href="product-detail.html?id=${encodeURIComponent(item.productId)}">
+                <img src="${image}" alt="${name}" onerror="this.onerror=null;this.src='${fallbackImage}'" />
+              </a>
+              <div class="product-info">
+                <a href="product-detail.html?id=${encodeURIComponent(item.productId)}" class="product-name">${name}</a>
+                <p class="product-code">Mã SP: ${productId}</p>
+                <span class="stock-status"><i class="fi fi-sr-check-circle"></i> ${stockLabel}</span>
+              </div>
+            </div>
+            <div class="unit-price"><strong>${formatCurrency(price)}</strong></div>
+            <div class="quantity-control" aria-label="Điều chỉnh số lượng">
+              <button type="button" class="quantity-btn decrease" aria-label="Giảm số lượng">−</button>
+              <input class="quantity-input" type="number" value="${item.quantity}" min="1" max="${Math.max(1, stock)}" aria-label="Số lượng" />
+              <button type="button" class="quantity-btn increase" aria-label="Tăng số lượng">+</button>
+            </div>
+            <strong class="item-total">${formatCurrency(price * item.quantity)}</strong>
+            <button type="button" class="remove-item" title="Xóa sản phẩm" aria-label="Xóa sản phẩm">
+              <i class="fi fi-rr-trash"></i>
+            </button>
+          </article>`;
+            })
+            .join("");
+
+          updateSummary();
+        }
+
+        function updateSummary() {
+          const items = state.cart.items;
+          const selectedItems = items.filter((item) =>
+            state.selected.has(item.productId),
+          );
+          const subtotal = selectedItems.reduce(
+            (sum, item) =>
+              sum +
+              Number(item.product?.price || 0) * Number(item.quantity || 0),
+            0,
+          );
+          const selectedQuantity = selectedItems.reduce(
+            (sum, item) => sum + Number(item.quantity || 0),
+            0,
+          );
+          const totalQuantity = items.reduce(
+            (sum, item) => sum + Number(item.quantity || 0),
+            0,
+          );
+          const discountAmount = Math.round(subtotal * state.discountRate);
+          const shipping = selectedQuantity > 0 ? state.shippingFee : 0;
+          const total = Math.max(0, subtotal - discountAmount + shipping);
+
+          elements.subtotal.textContent = formatCurrency(subtotal);
+          elements.discount.textContent = `−${formatCurrency(discountAmount)}`;
+          elements.shippingFee.textContent =
+            shipping === 0 ? "Miễn phí" : formatCurrency(shipping);
+          elements.grandTotal.textContent = formatCurrency(total);
+          elements.headerCount.textContent = totalQuantity;
+          elements.productCount.textContent = `${totalQuantity} sản phẩm`;
+
+          elements.selectAll.checked =
+            items.length > 0 && selectedItems.length === items.length;
+          elements.selectAll.indeterminate =
+            selectedItems.length > 0 && selectedItems.length < items.length;
+
+          const disabled = selectedItems.length === 0;
+          elements.checkoutButton.classList.toggle("disabled", disabled);
+          elements.checkoutButton.setAttribute(
+            "aria-disabled",
+            String(disabled),
+          );
+        }
+
+        async function updateQuantity(productId, quantity) {
+          const item = state.cart.items.find(
+            (entry) => entry.productId === productId,
+          );
+          if (!item) return;
+
+          const stock = Math.max(1, Number(item.product?.stock || 1));
+          const nextQuantity = Math.max(
+            1,
+            Math.min(stock, Number(quantity) || 1),
+          );
+
+          try {
+            state.cart = normalizeCart(
+              await request(
+                `/api/cart/items/${encodeURIComponent(productId)}`,
+                {
+                  method: "PUT",
+                  body: { quantity: nextQuantity },
+                },
+              ),
+            );
+            renderCart();
+          } catch (error) {
+            alert(`Không cập nhật được số lượng: ${error.message}`);
+            await loadCart();
+          }
+        }
+
+        async function removeItem(productId) {
+          try {
+            try {
+              state.cart = normalizeCart(
+                await request(
+                  `/api/cart/items/${encodeURIComponent(productId)}`,
+                  {
+                    method: "DELETE",
+                  },
+                ),
+              );
+            } catch (error) {
+              // Tương thích với backend cũ: PUT quantity=0 dùng để xóa.
+              if (![404, 405].includes(error.status)) throw error;
+              state.cart = normalizeCart(
+                await request(
+                  `/api/cart/items/${encodeURIComponent(productId)}`,
+                  {
+                    method: "PUT",
+                    body: { quantity: 0 },
+                  },
+                ),
+              );
+            }
+            state.selected.delete(productId);
+            renderCart();
+          } catch (error) {
+            alert(`Không xóa được sản phẩm: ${error.message}`);
+            await loadCart();
+          }
+        }
+
+        elements.cartList.addEventListener("click", (event) => {
+          const row = event.target.closest(".cart-item");
+          if (!row || state.loading) return;
+
+          const item = state.cart.items.find(
+            (entry) => entry.productId === row.dataset.id,
+          );
+          if (!item) return;
+
+          if (event.target.closest(".increase")) {
+            updateQuantity(item.productId, item.quantity + 1);
+          } else if (event.target.closest(".decrease")) {
+            if (item.quantity <= 1) removeItem(item.productId);
+            else updateQuantity(item.productId, item.quantity - 1);
+          } else if (event.target.closest(".remove-item")) {
+            removeItem(item.productId);
+          }
+        });
+
+        elements.cartList.addEventListener("change", (event) => {
+          const row = event.target.closest(".cart-item");
+          if (!row || state.loading) return;
+
+          const item = state.cart.items.find(
+            (entry) => entry.productId === row.dataset.id,
+          );
+          if (!item) return;
+
+          if (event.target.matches(".item-checkbox")) {
+            if (event.target.checked) state.selected.add(item.productId);
+            else state.selected.delete(item.productId);
+            updateSummary();
+          }
+
+          if (event.target.matches(".quantity-input")) {
+            updateQuantity(item.productId, event.target.value);
+          }
+        });
+
+        elements.selectAll.addEventListener("change", () => {
+          state.selected = elements.selectAll.checked
+            ? new Set(state.cart.items.map((item) => item.productId))
+            : new Set();
+          renderCart();
+        });
+
+        elements.clearCart.addEventListener("click", async () => {
+          if (!state.cart.items.length) return;
+          if (!confirm("Bạn có chắc muốn xóa toàn bộ giỏ hàng?")) return;
+
+          const productIds = state.cart.items.map((item) => item.productId);
+          for (const productId of productIds) {
+            await removeItem(productId);
+          }
+        });
+
+        document.querySelectorAll('input[name="shipping"]').forEach((radio) => {
+          radio.addEventListener("change", () => {
+            state.shippingFee = Number(radio.value || 0);
+            document.querySelectorAll(".shipping-option").forEach((option) => {
+              const input = option.querySelector('input[type="radio"]');
+              option.classList.toggle("active", Boolean(input?.checked));
+            });
+            updateSummary();
+          });
+        });
+
+        elements.applyCoupon.addEventListener("click", () => {
+          const code = elements.couponInput.value.trim().toUpperCase();
+          elements.couponMessage.className = "coupon-message";
+
+          if (code === "BLUETECH10") {
+            state.discountRate = 0.1;
+            elements.couponMessage.textContent =
+              "Áp dụng mã giảm 10% thành công.";
+            elements.couponMessage.classList.add("success");
+          } else if (code === "FREESHIP") {
+            state.shippingFee = 0;
+            document
+              .querySelector('input[name="shipping"][value="0"]')
+              ?.click();
+            elements.couponMessage.textContent =
+              "Áp dụng mã miễn phí vận chuyển thành công.";
+            elements.couponMessage.classList.add("success");
+          } else {
+            state.discountRate = 0;
+            elements.couponMessage.textContent =
+              "Mã giảm giá không hợp lệ hoặc đã hết hạn.";
+            elements.couponMessage.classList.add("error");
+          }
+
+          updateSummary();
+        });
+
+        elements.couponInput.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            elements.applyCoupon.click();
+          }
+        });
+
+        elements.checkoutButton.addEventListener("click", (event) => {
+          if (!state.cart.items.length || !state.selected.size) {
+            event.preventDefault();
+            alert("Giỏ hàng chưa có sản phẩm để thanh toán.");
+            return;
+          }
+
+          if (state.selected.size !== state.cart.items.length) {
+            event.preventDefault();
+            alert("Vui lòng chọn tất cả sản phẩm trước khi thanh toán.");
+          }
+        });
+
+        async function init() {
+          const token = getToken();
+          const user = getCurrentUser();
+          if (!token) {
+            alert("Vui lòng đăng nhập để xem giỏ hàng.");
+            location.href = "login.html";
+            return;
+          }
+
+          if (user?.role && String(user.role).toUpperCase() !== "CUSTOMER") {
+            alert("Chỉ tài khoản khách hàng mới có thể sử dụng giỏ hàng.");
+            location.href = "index.html";
+            return;
+          }
+
+          await loadCart();
+        }
+
+        init();
+      })();
+    </script>
+  </body>
+</html>
