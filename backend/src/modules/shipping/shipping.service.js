@@ -1,23 +1,17 @@
-const { v4: uuid } = require('uuid');
-
-function calculateFee(address, totalAmount) {
-  const base = 30000;
+function calculateFee(address, subtotal, deliveryMethod = 'STANDARD') {
+  if (deliveryMethod === 'EXPRESS') return 49000;
   const remoteFee = String(address || '').toLowerCase().includes('huyện') ? 15000 : 0;
-  const discount = totalAmount >= 10000000 ? 30000 : 0;
-  return Math.max(0, base + remoteFee - discount);
+  return subtotal >= 10000000 ? remoteFee : 30000 + remoteFee;
 }
 
-function createShipment(db, order) {
-  const shipment = {
-    id: uuid(), orderId: order.id,
-    trackingCode: 'VC' + Math.floor(100000 + Math.random() * 900000),
-    fee: calculateFee(order.shippingAddress, order.totalAmount),
-    status: 'CREATED', createdAt: new Date().toISOString()
+function createShipment(order, fee) {
+  return {
+    orderId: order.id,
+    provider: 'BlueShip Sandbox',
+    fee,
+    trackingCode: `BTGHN${Date.now().toString().slice(-9)}`,
+    status: 'READY'
   };
-  db.shipments.push(shipment);
-  order.shippingStatus = 'CREATED';
-  order.trackingCode = shipment.trackingCode;
-  return shipment;
 }
 
 module.exports = { calculateFee, createShipment };

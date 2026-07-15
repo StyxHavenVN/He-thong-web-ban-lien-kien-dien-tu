@@ -4,19 +4,39 @@ function formatMoney(value) {
   return Number(value || 0).toLocaleString('vi-VN') + 'đ';
 }
 
-function getToken() { return localStorage.getItem('token'); }
-function getUser() { try { return JSON.parse(localStorage.getItem('user') || 'null'); } catch { return null; } }
-function setSession(data) { localStorage.setItem('token', data.token); localStorage.setItem('user', JSON.stringify(data.user)); }
-function logout() { localStorage.removeItem('token'); localStorage.removeItem('user'); location.href = 'index.html'; }
+function getToken() { return localStorage.getItem('accessToken'); }
+function escapeText(value) { return String(value || '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;'); }
+function getUser() {
+  try { return JSON.parse(localStorage.getItem('userInfo') || 'null'); }
+  catch (_error) { return null; }
+}
+function setSession(data) {
+  localStorage.setItem('accessToken', data.token);
+  localStorage.setItem('userInfo', JSON.stringify(data.user));
+}
+function logout() {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('userInfo');
+  location.href = 'index.html';
+}
 
 async function api(path, options = {}) {
-  const headers = { 'Content-Type': 'application/json', ...(options.headers || {}) };
+  const headers = { ...(options.headers || {}) };
   const token = getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
-  const res = await fetch(API_BASE + path, { ...options, headers });
-  const data = await res.json().catch(() => ({}));
-  if (!res.ok) throw new Error(data.message || 'Có lỗi xảy ra.');
-  return data;
+  let body = options.body;
+  if (body !== undefined && !(body instanceof FormData)) {
+    headers['Content-Type'] ||= 'application/json';
+    if (typeof body !== 'string') body = JSON.stringify(body);
+  }
+  const res = await fetch(API_BASE + path, { ...options, headers, body });
+  const payload = await res.json().catch(() => ({}));
+  if (res.status === 401) {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('userInfo');
+  }
+  if (!res.ok) throw new Error(payload.message || 'Có lỗi xảy ra.');
+  return payload.success && Object.prototype.hasOwnProperty.call(payload, 'data') ? payload.data : payload;
 }
 
 function showNotice(message, type = 'success') {
@@ -24,7 +44,7 @@ function showNotice(message, type = 'success') {
   if (!el) return alert(message);
   el.className = `notice show ${type}`;
   el.textContent = message;
-  setTimeout(() => el.className = `notice ${type}`, 3500);
+  setTimeout(() => { el.className = `notice ${type}`; }, 3500);
 }
 
 function renderNav() {
@@ -32,10 +52,11 @@ function renderNav() {
   const nav = document.querySelector('#nav');
   if (!nav) return;
   nav.innerHTML = `
-    <a href="index.html">Sản phẩm</a>
+    <a href="index.html">Trang chủ</a>
+    <a href="products.html">Sản phẩm</a>
     ${user?.role === 'CUSTOMER' ? '<a href="cart.html">Giỏ hàng</a><a href="orders.html">Đơn hàng</a>' : ''}
-    ${user?.role === 'ADMIN' || user?.role === 'STAFF' ? '<a href="admin.html">Quản trị</a>' : ''}
-    ${user ? `<span>Xin chào, ${user.fullName}</span><button onclick="logout()">Đăng xuất</button>` : '<a href="login.html">Đăng nhập</a><a href="register.html">Đăng ký</a>'}
+    ${['ADMIN', 'STAFF'].includes(user?.role) ? '<a href="admin.html">Quản trị</a>' : ''}
+    ${user ? `<span>Xin chào, ${escapeText(user.fullName)}</span><button onclick="logout()">Đăng xuất</button>` : '<a href="login.html">Đăng nhập</a><a href="register.html">Đăng ký</a>'}
   `;
 }
 

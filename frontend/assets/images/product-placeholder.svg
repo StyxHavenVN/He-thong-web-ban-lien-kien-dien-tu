@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="Ảnh sản phẩm BlueTech">
+  <rect width="400" height="300" rx="24" fill="#eef6ff"/>
+  <rect x="105" y="75" width="190" height="130" rx="16" fill="#d7eaff" stroke="#2483e8" stroke-width="8"/>
+  <path d="M140 225h120M160 205v20m80-20v20" stroke="#075eb4" stroke-width="12" stroke-linecap="round"/>
+  <text x="200" y="145" text-anchor="middle" font-family="Arial,sans-serif" font-size="30" font-weight="700" fill="#075eb4">BlueTech</text>
+</svg>

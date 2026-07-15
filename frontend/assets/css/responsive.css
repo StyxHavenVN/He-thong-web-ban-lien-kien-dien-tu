@@ -135,3 +135,189 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ===== RESPONSIVE TRANG GIỎ HÀNG ===== */
+@media (max-width: 1180px) {
+  .cart-layout {
+    grid-template-columns: minmax(0, 1fr) 340px;
+  }
+  .cart-table-header,
+  .cart-item {
+    grid-template-columns: 34px minmax(220px, 1fr) 110px 116px 118px 32px;
+    gap: 8px;
+    padding-right: 14px;
+    padding-left: 14px;
+  }
+  .product-image {
+    width: 78px;
+    height: 78px;
+    flex-basis: 78px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .cart-layout {
+    grid-template-columns: 1fr;
+  }
+  .cart-summary {
+    position: static;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(320px, 1fr);
+    align-items: start;
+  }
+  .support-card {
+    grid-column: 1 / -1;
+  }
+  .cart-benefits {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 18px;
+  }
+  .benefit-item:nth-child(2) {
+    border-right: none;
+  }
+}
+
+@media (max-width: 820px) {
+  .cart-table-header {
+    display: none;
+  }
+  .cart-item {
+    position: relative;
+    grid-template-columns: 30px 96px 1fr;
+    grid-template-areas: "check image info" "check image price" "check image quantity" "check image total";
+    gap: 7px 12px;
+    align-items: start;
+    padding: 17px 48px 17px 14px;
+  }
+  .cart-check {
+    grid-area: check;
+    padding-top: 5px;
+  }
+  .cart-product {
+    display: contents;
+  }
+  .product-image {
+    grid-area: image;
+    width: 96px;
+    height: 96px;
+  }
+  .product-info {
+    grid-area: info;
+  }
+  .unit-price {
+    grid-area: price;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+  }
+  .quantity-control {
+    grid-area: quantity;
+    width: 110px;
+    margin-top: 3px;
+  }
+  .item-total {
+    grid-area: total;
+    margin-top: 4px;
+  }
+  .item-total::before {
+    content: "Thành tiền: ";
+    color: var(--gray-600);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .remove-item {
+    position: absolute;
+    top: 14px;
+    right: 11px;
+  }
+  .cart-list-footer {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 680px) {
+  .cart-heading {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+  .cart-heading h1 {
+    font-size: 24px;
+  }
+  .cart-summary {
+    display: flex;
+  }
+  .cart-benefits {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+  .benefit-item,
+  .benefit-item:nth-child(2) {
+    padding: 13px 5px;
+    border-right: none;
+    border-bottom: 1px solid var(--gray-200);
+  }
+  .benefit-item:last-child {
+    border-bottom: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-page {
+    padding-top: 13px;
+    padding-bottom: 36px;
+  }
+  .breadcrumb {
+    margin-bottom: 12px;
+  }
+  .cart-heading {
+    gap: 9px;
+    margin-bottom: 16px;
+  }
+  .cart-item {
+    grid-template-columns: 24px 78px 1fr;
+    gap: 6px 9px;
+    padding: 14px 38px 14px 10px;
+  }
+  .product-image {
+    width: 78px;
+    height: 78px;
+  }
+  .product-name {
+    font-size: 12.5px;
+  }
+  .product-code {
+    display: none;
+  }
+  .stock-status {
+    margin-top: 5px;
+    font-size: 10.5px;
+  }
+  .unit-price strong {
+    font-size: 12.5px;
+  }
+  .unit-price del {
+    font-size: 10.5px;
+  }
+  .quantity-control {
+    width: 100px;
+    height: 34px;
+    grid-template-columns: 31px 1fr 31px;
+  }
+  .item-total {
+    font-size: 13.5px;
+  }
+  .summary-card,
+  .support-card {
+    padding: 17px 14px;
+  }
+  .summary-total strong {
+    font-size: 20px;
+  }
+  .coupon-form {
+    grid-template-columns: 1fr;
+  }
+  .coupon-form button {
+    min-height: 40px;
+  }
+}

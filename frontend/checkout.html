@@ -1,0 +1,16 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Thanh toán | BlueTech</title>
+  <link rel="stylesheet" href="assets/css/styles.css"><link rel="stylesheet" href="assets/css/app-pages.css">
+</head>
+<body>
+  <header class="header"><a class="logo" href="index.html">BlueTech</a><nav id="nav" class="nav"></nav></header>
+  <main class="app-main"><h1>Thanh toán</h1><div id="notice" class="notice"></div><div class="app-grid">
+    <form id="checkoutForm" class="app-card"><h2>Thông tin giao hàng</h2><div class="field"><label>Địa chỉ nhận hàng</label><textarea id="shippingAddress" required></textarea></div><div class="field"><label>Phương thức giao hàng</label><select id="deliveryMethod"><option value="STANDARD">Tiêu chuẩn</option><option value="EXPRESS">Hỏa tốc (+49.000đ)</option></select></div><div class="field"><label>Thanh toán</label><select id="paymentMethod"><option value="COD">Thanh toán khi nhận hàng</option><option value="ONLINE">BluePay Sandbox — mô phỏng thành công</option><option value="ONLINE_FAIL">BluePay Sandbox — mô phỏng thất bại</option></select></div><button type="submit">Xác nhận đặt hàng</button></form>
+    <section class="app-card"><h2>Đơn hàng</h2><div id="checkoutItems">Đang tải...</div><div class="summary-line total"><b>Tạm tính</b><b id="checkoutTotal">0đ</b></div></section>
+  </div></main>
+  <script src="assets/js/api.js"></script><script src="assets/js/checkout.js"></script>
+</body>
+</html>

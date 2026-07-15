@@ -14,10 +14,12 @@ const Product = sequelize.define('Product', {
     specs: { type: DataTypes.JSONB },
     badge: { type: DataTypes.STRING },
     rating: { type: DataTypes.FLOAT, defaultValue: 5.0 },
-    reviews: { type: DataTypes.INTEGER, defaultValue: 0 }
+    reviews: { type: DataTypes.INTEGER, defaultValue: 0 },
+    active: { type: DataTypes.BOOLEAN, allowNull: false, defaultValue: true }
 }, {
     tableName: 'products',
-    timestamps: true
+    timestamps: true,
+    indexes: [{ fields: ['category_id'] }, { fields: ['brand'] }, { fields: ['active'] }]
 });
 
 module.exports = Product;
