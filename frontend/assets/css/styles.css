@@ -169,19 +169,31 @@ a {
   display: block;
 }
 
+.user-account-links {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+.account-page-link,
 .logout-link {
   font-size: 12px;
   color: var(--blue-600);
   text-decoration: none;
   cursor: pointer;
-  margin-top: 2px;
-  display: block;
   font-weight: 600;
 }
 
+.account-page-link:hover,
 .logout-link:hover {
   color: var(--orange);
   text-decoration: underline;
+}
+
+.logout-link {
+  display: inline;
 }
 
 /* ===== BREADCRUMB DÙNG CHUNG ===== */

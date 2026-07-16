@@ -6,7 +6,30 @@ document.addEventListener('DOMContentLoaded', () => {
   const userAuthArea = document.getElementById('user-auth-area');
   if (userAuthArea && user && token) {
     const displayName = String(user.fullName || '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
-    userAuthArea.innerHTML = `<div class="user-logged-in"><span class="user-name">Chào, ${displayName}</span><a href="#" id="logout-btn" class="logout-link">Đăng xuất</a></div>`;
+    const role = String(user.role || '').toUpperCase();
+    const accountPage = ['ADMIN', 'STAFF'].includes(role) ? 'admin.html' : 'orders.html';
+    const accountLabel = role === 'ADMIN'
+      ? 'Trang quản trị'
+      : role === 'STAFF'
+        ? 'Quản lý đơn hàng'
+        : 'Đơn hàng của tôi';
+
+    userAuthArea.innerHTML = `
+      <div class="user-logged-in">
+        <span class="user-name">Chào, ${displayName}</span>
+        <div class="user-account-links">
+          <a href="${accountPage}" class="account-page-link">${accountLabel}</a>
+          <span aria-hidden="true">·</span>
+          <a href="#" id="logout-btn" class="logout-link">Đăng xuất</a>
+        </div>
+      </div>`;
+
+    const orderTrackingLink = document.getElementById('order-tracking-link');
+    if (orderTrackingLink) {
+      orderTrackingLink.href = accountPage;
+      orderTrackingLink.querySelector('.tracking-label').textContent = accountLabel;
+    }
+
     document.getElementById('logout-btn')?.addEventListener('click', (event) => {
       event.preventDefault();
       localStorage.removeItem('accessToken');

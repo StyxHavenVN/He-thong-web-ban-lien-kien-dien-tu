@@ -11,7 +11,10 @@ const categories = [
   ['cat-case', 'Vỏ máy tính', 'case', 'assets/categories/case.png'],
   ['cat-cooler', 'Tản nhiệt', 'cooler', 'assets/categories/cooler.png'],
   ['cat-monitor', 'Màn hình', 'monitor', 'assets/categories/screen.png'],
-  ['cat-keyboard', 'Bàn phím', 'keyboard', 'assets/categories/keyboard.jpg']
+  ['cat-keyboard', 'Bàn phím', 'keyboard', 'assets/categories/keyboard.jpg'],
+  ['cat-laptop', 'Laptop', 'laptop', 'assets/images/product-placeholder.svg'],
+  ['cat-mouse', 'Chuột máy tính', 'mouse', 'assets/images/product-placeholder.svg'],
+  ['cat-headset', 'Tai nghe', 'headset', 'assets/images/product-placeholder.svg']
 ].map(([id, name, slug, image]) => ({ id, name, slug, image }));
 
 const products = [
@@ -34,7 +37,11 @@ const products = [
   ['NZXT H5 Flow Matte Black', 'cat-case', 'NZXT', 2190000, 8, 'assets/categories/case.png', { form: 'Mid Tower' }, null],
   ['DeepCool AK400 Digital', 'cat-cooler', 'DeepCool', 950000, 22, 'assets/categories/cooler.png', { type: 'Air Cooler' }, 'MỚI'],
   ['Màn hình LG 24MR400 24 inch 100Hz', 'cat-monitor', 'LG', 2590000, 16, 'assets/categories/screen.png', { size: '24 inch', refreshRate: '100Hz' }, '-10%'],
-  ['Bàn phím cơ Keychron K8 Pro', 'cat-keyboard', 'Keychron', 2490000, 11, 'assets/categories/keyboard.jpg', { layout: 'TKL' }, null]
+  ['Bàn phím cơ Keychron K8 Pro', 'cat-keyboard', 'Keychron', 2490000, 11, 'assets/categories/keyboard.jpg', { layout: 'TKL' }, null],
+  ['Laptop ASUS Vivobook 15', 'cat-laptop', 'ASUS', 14990000, 8, 'assets/images/product-placeholder.svg', { cpu: 'Intel Core i5', ram: '16GB', storage: '512GB SSD' }, '-8%'],
+  ['Laptop Lenovo LOQ 15', 'cat-laptop', 'Lenovo', 21990000, 5, 'assets/images/product-placeholder.svg', { cpu: 'Intel Core i5', ram: '16GB', gpu: 'RTX 4050' }, 'MỚI'],
+  ['Chuột Logitech G304 Lightspeed', 'cat-mouse', 'Logitech', 790000, 24, 'assets/images/product-placeholder.svg', { connection: 'Wireless', dpi: 12000 }, '-10%'],
+  ['Tai nghe HyperX Cloud III', 'cat-headset', 'HyperX', 2390000, 10, 'assets/images/product-placeholder.svg', { connection: '3.5mm/USB', microphone: true }, 'HOT']
 ].map(([name, categoryId, brand, price, stock, image, specs, badge]) => ({
   name, categoryId, brand, price, stock, image, specs, badge,
   description: `${name} chính hãng, bảo hành đầy đủ tại BlueTech.`,

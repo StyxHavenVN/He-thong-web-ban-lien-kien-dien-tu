@@ -2,13 +2,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('product-list-container');
   if (!container) return;
   const params = new URLSearchParams(location.search);
-  const filters = { keyword: params.get('keyword') || '', categoryId: params.get('category') || '', sort: 'newest' };
+  const filters = {
+    keyword: params.get('keyword') || '',
+    categoryId: params.get('category') || '',
+    group: params.get('group') || '',
+    promotion: params.get('promotion') || '',
+    sort: params.get('sort') || 'newest'
+  };
+  const categoryNames = {
+    'cat-cpu': 'CPU - Bộ xử lý', 'cat-mainboard': 'Mainboard - Bo mạch chủ',
+    'cat-ram': 'RAM - Bộ nhớ', 'cat-vga': 'VGA - Card màn hình',
+    'cat-ssd': 'Ổ cứng SSD', 'cat-psu': 'Nguồn máy tính',
+    'cat-case': 'Vỏ máy tính', 'cat-cooler': 'Tản nhiệt',
+    'cat-monitor': 'Màn hình', 'cat-keyboard': 'Bàn phím',
+    'cat-laptop': 'Laptop', 'cat-mouse': 'Chuột máy tính', 'cat-headset': 'Tai nghe'
+  };
+  const groupNames = { components: 'PC - Linh kiện', accessories: 'Phụ kiện', peripherals: 'Thiết bị ngoại vi' };
+  const pageTitle = filters.promotion === '1'
+    ? 'Sản phẩm khuyến mãi'
+    : categoryNames[filters.categoryId]
+      || groupNames[filters.group]
+      || (filters.keyword ? `Kết quả cho “${filters.keyword}”` : 'Tất cả sản phẩm');
+  document.title = `${pageTitle} - BlueTech`;
+  document.getElementById('catalog-title').textContent = pageTitle;
+  document.getElementById('breadcrumb-current').textContent = pageTitle;
+  const activeNav = filters.promotion === '1' ? 'promotion'
+    : filters.categoryId === 'cat-laptop' ? 'laptop'
+      : filters.categoryId === 'cat-monitor' ? 'monitor'
+        : filters.group || 'components';
+  document.querySelector(`.nav-item[data-nav="${activeNav}"]`)?.classList.add('active');
   const money = (value) => Number(value || 0).toLocaleString('vi-VN') + ' ₫';
   const escapeHtml = (value) => String(value || '').replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;');
 
   async function loadProducts() {
     container.innerHTML = '<p style="grid-column:1/-1;text-align:center;padding:40px">Đang tải dữ liệu...</p>';
-    const query = new URLSearchParams(Object.entries(filters).filter(([, value]) => value));
+      const query = new URLSearchParams(Object.entries(filters).filter(([, value]) => value));
     try {
       const response = await fetch(`/api/products?${query}`);
       const payload = await response.json();
@@ -50,9 +78,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const searchInput = document.getElementById('search-input');
   if (searchInput) searchInput.value = filters.keyword;
-  const executeSearch = () => { filters.keyword = searchInput.value.trim(); loadProducts(); };
+  const executeSearch = () => {
+    const keyword = searchInput.value.trim();
+    location.href = `products.html?keyword=${encodeURIComponent(keyword)}`;
+  };
   document.getElementById('search-btn')?.addEventListener('click', executeSearch);
   searchInput?.addEventListener('keydown', (event) => { if (event.key === 'Enter') executeSearch(); });
-  document.getElementById('sort-select')?.addEventListener('change', (event) => { filters.sort = event.target.value; loadProducts(); });
+  const sortSelect = document.getElementById('sort-select');
+  if (sortSelect) sortSelect.value = filters.sort;
+  sortSelect?.addEventListener('change', (event) => { filters.sort = event.target.value; loadProducts(); });
   loadProducts();
 });

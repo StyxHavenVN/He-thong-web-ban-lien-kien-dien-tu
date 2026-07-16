@@ -5,6 +5,16 @@ function buildWhere(filters = {}, includeInactive = false) {
   const where = includeInactive ? {} : { active: true };
   if (filters.keyword) where.name = { [Op.iLike]: `%${String(filters.keyword).trim()}%` };
   if (filters.categoryId) where.categoryId = filters.categoryId;
+  if (!filters.categoryId && filters.group === 'components') {
+    where.categoryId = { [Op.in]: ['cat-cpu', 'cat-mainboard', 'cat-ram', 'cat-vga', 'cat-ssd', 'cat-psu', 'cat-case', 'cat-cooler'] };
+  }
+  if (!filters.categoryId && filters.group === 'accessories') {
+    where.categoryId = { [Op.in]: ['cat-keyboard', 'cat-mouse', 'cat-headset'] };
+  }
+  if (!filters.categoryId && filters.group === 'peripherals') {
+    where.categoryId = { [Op.in]: ['cat-keyboard', 'cat-mouse', 'cat-headset', 'cat-monitor'] };
+  }
+  if (String(filters.promotion || '') === '1') where.badge = { [Op.regexp]: '%$' };
   if (filters.brand) where.brand = { [Op.in]: String(filters.brand).split(',').map((item) => item.trim()).filter(Boolean) };
   if (filters.minPrice || filters.maxPrice) {
     where.price = {};

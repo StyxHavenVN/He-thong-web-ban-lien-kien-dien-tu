@@ -36,17 +36,15 @@
           <span><i class="fi fi-sr-time-past"></i> Hoàn trả trong 7 ngày</span>
         </div>
         <div class="top-bar-center">
-          <span
-            ><i class="fi fi-sr-computer"></i> Build PC dễ dàng - Trả góp
-            0%</span
-          >
+          <a href="build-pc.html"><i class="fi fi-sr-computer"></i> Build PC dễ dàng - Trả góp 0%</a>
         </div>
         <div class="top-bar-right">
           <span><i class="fi fi-sr-marker"></i> Hệ thống showroom</span>
-          <span
-            ><i class="fi fi-sr-document-signed"></i> Kiểm tra đơn hàng</span
+          <a id="order-tracking-link" href="login.html"
+            ><i class="fi fi-sr-document-signed"></i>
+            <span class="tracking-label">Kiểm tra đơn hàng</span></a
           >
-          <span><i class="fi fi-sr-headset"></i> Hỗ trợ</span>
+          <a href="support.html"><i class="fi fi-sr-headset"></i> Hỗ trợ</a>
         </div>
       </div>
     </div>
@@ -122,26 +120,15 @@
 
     <nav class="main-nav">
       <div class="container nav-container">
-        <div class="nav-item"><i class="fi fi-sr-settings"></i> Build PC</div>
-        <div class="nav-item"><i class="fi fi-sr-star"></i> Khuyến mãi</div>
-        <div class="nav-item"><i class="fi fi-sr-laptop"></i> Laptop</div>
-        <div
-          class="nav-item"
-          style="
-            background: rgba(255, 255, 255, 0.15);
-            color: var(--white);
-            border-bottom-color: var(--white);
-          "
-        >
-          <i class="fi fi-sr-box-alt"></i> PC - Linh kiện
-        </div>
-        <div class="nav-item"><i class="fi fi-sr-headphones"></i> Phụ kiện</div>
-        <div class="nav-item"><i class="fi fi-sr-screen"></i> Màn hình</div>
-        <div class="nav-item">
-          <i class="fi fi-sr-mouse"></i> Thiết bị ngoại vi
-        </div>
-        <div class="nav-item"><i class="fi fi-sr-document"></i> Tin tức</div>
-        <div class="nav-item"><i class="fi fi-sr-headset"></i> Hỗ trợ</div>
+        <a class="nav-item" data-nav="build" href="build-pc.html"><i class="fi fi-sr-settings"></i> Build PC</a>
+        <a class="nav-item" data-nav="promotion" href="products.html?promotion=1"><i class="fi fi-sr-star"></i> Khuyến mãi</a>
+        <a class="nav-item" data-nav="laptop" href="products.html?category=cat-laptop"><i class="fi fi-sr-laptop"></i> Laptop</a>
+        <a class="nav-item" data-nav="components" href="products.html?group=components"><i class="fi fi-sr-box-alt"></i> PC - Linh kiện</a>
+        <a class="nav-item" data-nav="accessories" href="products.html?group=accessories"><i class="fi fi-sr-headphones"></i> Phụ kiện</a>
+        <a class="nav-item" data-nav="monitor" href="products.html?category=cat-monitor"><i class="fi fi-sr-screen"></i> Màn hình</a>
+        <a class="nav-item" data-nav="peripherals" href="products.html?group=peripherals"><i class="fi fi-sr-mouse"></i> Thiết bị ngoại vi</a>
+        <a class="nav-item" data-nav="news" href="news.html"><i class="fi fi-sr-document"></i> Tin tức</a>
+        <a class="nav-item" data-nav="support" href="support.html"><i class="fi fi-sr-headset"></i> Hỗ trợ</a>
       </div>
     </nav>
 
@@ -150,8 +137,8 @@
         class="breadcrumb"
         style="padding: 16px 0; font-size: 13.5px; color: var(--gray-600)"
       >
-        <a href="index.html">Trang chủ</a> > <a href="#">PC - Linh kiện</a> >
-        <strong style="color: var(--gray-900)">Card màn hình</strong>
+        <a href="index.html">Trang chủ</a> > <a href="products.html">Sản phẩm</a> >
+        <strong id="breadcrumb-current" style="color: var(--gray-900)">Tất cả sản phẩm</strong>
       </div>
 
       <div
@@ -344,6 +331,11 @@
                   <span class="menu-arrow">›</span>
                 </a>
               </li>
+              <li><a href="products.html?category=cat-laptop" data-cat="cat-laptop" style="display:flex;justify-content:space-between;width:100%;text-decoration:none;color:inherit;padding:4px 0"><div class="menu-left"><span class="icon"></span> Laptop</div><span class="menu-arrow">›</span></a></li>
+              <li><a href="products.html?category=cat-monitor" data-cat="cat-monitor" style="display:flex;justify-content:space-between;width:100%;text-decoration:none;color:inherit;padding:4px 0"><div class="menu-left"><span class="icon"></span> Màn hình</div><span class="menu-arrow">›</span></a></li>
+              <li><a href="products.html?category=cat-keyboard" data-cat="cat-keyboard" style="display:flex;justify-content:space-between;width:100%;text-decoration:none;color:inherit;padding:4px 0"><div class="menu-left"><span class="icon"></span> Bàn phím</div><span class="menu-arrow">›</span></a></li>
+              <li><a href="products.html?category=cat-mouse" data-cat="cat-mouse" style="display:flex;justify-content:space-between;width:100%;text-decoration:none;color:inherit;padding:4px 0"><div class="menu-left"><span class="icon"></span> Chuột máy tính</div><span class="menu-arrow">›</span></a></li>
+              <li><a href="products.html?category=cat-headset" data-cat="cat-headset" style="display:flex;justify-content:space-between;width:100%;text-decoration:none;color:inherit;padding:4px 0"><div class="menu-left"><span class="icon"></span> Tai nghe</div><span class="menu-arrow">›</span></a></li>
             </ul>
           </aside>
         </div>
@@ -351,7 +343,7 @@
         <main class="category-main">
           <div class="category-toolbar">
             <div class="toolbar-left">
-              <h1>Card màn hình</h1>
+              <h1 id="catalog-title">Tất cả sản phẩm</h1>
               <span class="product-count" id="total-product-count"
                 >Đang tải dữ liệu...</span
               >

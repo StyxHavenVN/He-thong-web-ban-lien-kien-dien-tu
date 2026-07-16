@@ -32,15 +32,17 @@
           <img src="assets/logo/logo_ver2.png" alt="BlueTech Logo" />
         </div>
 
-        <div class="search-bar">
+        <form class="search-bar" action="products.html" method="get" role="search">
           <input
             type="text"
+            name="keyword"
+            aria-label="Tìm kiếm sản phẩm"
             placeholder="Bạn cần tìm gì? (VD: RTX 5060, i7-14700K…)"
           />
           <button type="submit" class="search-btn">
             <i class="fi fi-br-search"></i>
           </button>
-        </div>
+        </form>
 
         <div class="header-actions">
           <div class="action-item">
@@ -98,19 +100,15 @@
 
     <nav class="main-nav">
       <div class="container nav-container">
-        <div class="nav-item"><i class="fi fi-sr-settings"></i> Build PC</div>
-        <div class="nav-item"><i class="fi fi-sr-star"></i> Khuyến mãi</div>
-        <div class="nav-item"><i class="fi fi-sr-laptop"></i> Laptop</div>
-        <div class="nav-item">
-          <i class="fi fi-sr-box-alt"></i> PC - Linh kiện
-        </div>
-        <div class="nav-item"><i class="fi fi-sr-headphones"></i> Phụ kiện</div>
-        <div class="nav-item"><i class="fi fi-sr-screen"></i> Màn hình</div>
-        <div class="nav-item">
-          <i class="fi fi-sr-mouse"></i> Thiết bị ngoại vi
-        </div>
-        <div class="nav-item"><i class="fi fi-sr-document"></i> Tin tức</div>
-        <div class="nav-item"><i class="fi fi-sr-headset"></i> Hỗ trợ</div>
+        <a class="nav-item" data-nav="build" href="build-pc.html"><i class="fi fi-sr-settings"></i> Build PC</a>
+        <a class="nav-item" data-nav="promotion" href="products.html?promotion=1"><i class="fi fi-sr-star"></i> Khuyến mãi</a>
+        <a class="nav-item" data-nav="laptop" href="products.html?category=cat-laptop"><i class="fi fi-sr-laptop"></i> Laptop</a>
+        <a class="nav-item" data-nav="components" href="products.html?group=components"><i class="fi fi-sr-box-alt"></i> PC - Linh kiện</a>
+        <a class="nav-item" data-nav="accessories" href="products.html?group=accessories"><i class="fi fi-sr-headphones"></i> Phụ kiện</a>
+        <a class="nav-item" data-nav="monitor" href="products.html?category=cat-monitor"><i class="fi fi-sr-screen"></i> Màn hình</a>
+        <a class="nav-item" data-nav="peripherals" href="products.html?group=peripherals"><i class="fi fi-sr-mouse"></i> Thiết bị ngoại vi</a>
+        <a class="nav-item" data-nav="news" href="news.html"><i class="fi fi-sr-document"></i> Tin tức</a>
+        <a class="nav-item" data-nav="support" href="support.html"><i class="fi fi-sr-headset"></i> Hỗ trợ</a>
       </div>
     </nav>
 
@@ -377,56 +375,15 @@
         <div class="featured-categories">
           <div class="category-header">
             <h3>DANH MỤC NỔI BẬT</h3>
-            <ul class="category-tabs">
-              <li class="active">PC - LINH KIỆN</li>
-              <li>LAPTOP</li>
-              <li>PHỤ KIỆN</li>
-              <li>MÀN HÌNH</li>
-              <li>NGOẠI VI</li>
+            <ul class="category-tabs" aria-label="Nhóm danh mục">
+              <li><button class="active" type="button" data-category-group="components">PC - LINH KIỆN</button></li>
+              <li><button type="button" data-category-group="laptop">LAPTOP</button></li>
+              <li><button type="button" data-category-group="accessories">PHỤ KIỆN</button></li>
+              <li><button type="button" data-category-group="monitor">MÀN HÌNH</button></li>
+              <li><button type="button" data-category-group="peripherals">NGOẠI VI</button></li>
             </ul>
           </div>
-          <div class="category-grid">
-            <div class="cat-card">
-              <img src="assets/categories/cpu.png" alt="CPU" />
-              <h4>CPU</h4>
-              <p>Bộ vi xử lý</p>
-            </div>
-            <div class="cat-card">
-              <img src="assets/categories/vga.png" alt="VGA" />
-              <h4>VGA</h4>
-              <p>Card màn hình</p>
-            </div>
-            <div class="cat-card">
-              <img src="assets/categories/mainboard.png" alt="Mainboard" />
-              <h4>Mainboard</h4>
-              <p>Bo mạch chủ</p>
-            </div>
-            <div class="cat-card">
-              <img src="assets/categories/ram.png" alt="RAM" />
-              <h4>RAM</h4>
-              <p>Bộ nhớ trong</p>
-            </div>
-            <div class="cat-card">
-              <img src="assets/categories/ssd.png" alt="SSD" />
-              <h4>SSD</h4>
-              <p>Ổ cứng SSD</p>
-            </div>
-            <div class="cat-card">
-              <img src="assets/categories/psu.png" alt="PSU" />
-              <h4>Nguồn - PSU</h4>
-              <p>Nguồn máy tính</p>
-            </div>
-            <div class="cat-card">
-              <img src="assets/categories/case.png" alt="Case" />
-              <h4>Vỏ Case</h4>
-              <p>Vỏ máy tính</p>
-            </div>
-            <div class="cat-card">
-              <img src="assets/categories/cooler.png" alt="Tản nhiệt" />
-              <h4>Tản Nhiệt</h4>
-              <p>Tản nhiệt CPU</p>
-            </div>
-          </div>
+          <div class="category-grid" id="featured-category-grid" aria-live="polite"></div>
         </div>
 
         <div class="bottom-promo-banners">
@@ -462,5 +419,6 @@
     </div>
 
     <script src="assets/js/auth.js"></script>
+    <script src="assets/js/featured-categories.js"></script>
   </body>
 </html>

@@ -49,13 +49,19 @@ function showNotice(message, type = 'success') {
 
 function renderNav() {
   const user = getUser();
+  const role = String(user?.role || '').toUpperCase();
   const nav = document.querySelector('#nav');
   if (!nav) return;
   nav.innerHTML = `
     <a href="index.html">Trang chủ</a>
-    <a href="products.html">Sản phẩm</a>
-    ${user?.role === 'CUSTOMER' ? '<a href="cart.html">Giỏ hàng</a><a href="orders.html">Đơn hàng</a>' : ''}
-    ${['ADMIN', 'STAFF'].includes(user?.role) ? '<a href="admin.html">Quản trị</a>' : ''}
+    <a href="products.html?group=components">PC - Linh kiện</a>
+    <a href="build-pc.html">Build PC</a>
+    <a href="products.html?promotion=1">Khuyến mãi</a>
+    <a href="news.html">Tin tức</a>
+    <a href="support.html">Hỗ trợ</a>
+    ${role === 'CUSTOMER' ? '<a href="cart.html">Giỏ hàng</a><a href="orders.html">Đơn hàng của tôi</a>' : ''}
+    ${role === 'ADMIN' ? '<a href="admin.html">Trang quản trị</a>' : ''}
+    ${role === 'STAFF' ? '<a href="admin.html">Quản lý đơn hàng</a>' : ''}
     ${user ? `<span>Xin chào, ${escapeText(user.fullName)}</span><button onclick="logout()">Đăng xuất</button>` : '<a href="login.html">Đăng nhập</a><a href="register.html">Đăng ký</a>'}
   `;
 }

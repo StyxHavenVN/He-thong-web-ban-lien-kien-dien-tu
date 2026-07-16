@@ -31,7 +31,7 @@
         </a>
         <form action="products.html" class="search-bar" method="get">
           <input
-            name="search"
+            name="keyword"
             placeholder="Bạn cần tìm gì? (VD: RTX 5060, i7-14700K…)"
             type="text"
           />
@@ -74,31 +74,31 @@
     </header>
     <nav class="main-nav">
       <div class="container nav-container">
-        <a class="nav-item" href="#"
+        <a class="nav-item" data-nav="build" href="build-pc.html"
           ><i class="fi fi-sr-settings"></i> Build PC</a
         >
-        <a class="nav-item" href="#"
+        <a class="nav-item" data-nav="promotion" href="products.html?promotion=1"
           ><i class="fi fi-sr-star"></i> Khuyến mãi</a
         >
-        <a class="nav-item" href="products.html?category=cat-laptop"
+        <a class="nav-item" data-nav="laptop" href="products.html?category=cat-laptop"
           ><i class="fi fi-sr-laptop"></i> Laptop</a
         >
-        <a class="nav-item" href="products.html"
+        <a class="nav-item" data-nav="components" href="products.html?group=components"
           ><i class="fi fi-sr-box-alt"></i> PC - Linh kiện</a
         >
-        <a class="nav-item" href="#"
+        <a class="nav-item" data-nav="accessories" href="products.html?group=accessories"
           ><i class="fi fi-sr-headphones"></i> Phụ kiện</a
         >
-        <a class="nav-item" href="products.html?category=cat-monitor"
+        <a class="nav-item" data-nav="monitor" href="products.html?category=cat-monitor"
           ><i class="fi fi-sr-screen"></i> Màn hình</a
         >
-        <a class="nav-item" href="#"
+        <a class="nav-item" data-nav="peripherals" href="products.html?group=peripherals"
           ><i class="fi fi-sr-mouse"></i> Thiết bị ngoại vi</a
         >
-        <a class="nav-item" href="#"
+        <a class="nav-item" data-nav="news" href="news.html"
           ><i class="fi fi-sr-document"></i> Tin tức</a
         >
-        <a class="nav-item" href="#"><i class="fi fi-sr-headset"></i> Hỗ trợ</a>
+        <a class="nav-item" data-nav="support" href="support.html"><i class="fi fi-sr-headset"></i> Hỗ trợ</a>
       </div>
     </nav>
     <main class="cart-page container">

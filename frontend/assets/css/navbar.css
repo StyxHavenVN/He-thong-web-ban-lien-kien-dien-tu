@@ -40,6 +40,7 @@
 }
 
 .nav-item:first-child {
+.nav-item.active {
   color: var(--white);
   background: rgba(255, 255, 255, 0.15);
   border-bottom-color: var(--white);
